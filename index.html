@@ -3,26 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Thangachi 😘</title>
+    <title>Not Found</title>
     <style>
-        p{
-            display:flex;
-            align-item:center;
-            justify-content:center;
-            font-size:10px;
-            color:pink;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* error on center of the screen*/
+        .error {
+            color: red;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        /*below of the screen*/
+        footer {
+            margin-top: 30px;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+
+        }
+
+        /*style the button*/
+        button {
+            padding: 10px 20px;
+            width: 90%;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
-    
-       
 </head>
 <body>
-    <h2>All content deleted by-owner</h2>
-    <p>Advance Happy birthday</p>
+    <h2>All content deleted by owner</h2>
+    <div class="error">
+        <p>( ERROR )</p>
+    </div>
+
+    <footer>
+        <!-- send email to techstockvip@gmail.com with button, subject :- re-host request-->
+        <form action="mailto:techstockvip@gmail.com" method="post" subject="re-host request" enctype="text/plain">
+            <button type="submit">Send email to Owner</button>
+        </form>
+    </footer>
 </body>
 </html>
-
-
-
-
-
