@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Morning</title>
+    <title>Special Day Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
     
@@ -275,22 +275,34 @@
         .email-link {
             display: inline-block;
             background: #f75a993e;
-            color: rgb(255, 255, 255);
+            color: #e02e87;
             border: none;
             border-radius: 8px;
             padding: 4px 8px;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
+            /* glow animation this email button to attract attention and text */
+            box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
+            animation: glow 1.5s infinite alternate;
             font-size: 0.9em;
             cursor: pointer;
             text-decoration: none; /* Removes underline from link */
             transition: background 0.3s ease;
             
         }
-        
-        .email-link:hover {
-            background: #e02e87;
+   
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+                text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
+            }
+            to {
+                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
+                text-shadow: 0 0 8px rgba(247, 90, 152, 1);
+            }
         }
+        
 
     </style>
 </head>
@@ -339,7 +351,7 @@
             </div>
         </div>
         <div class="gift-message">
-            <p>Just a little more disturbance... can you open this every day.💕💫<a class="email-link" href="mailto:techstockvip@gmail.com?subject=A message from your page!">
+            <p>Just a little more disturbance... can you open this every day.💕💫<a class="email-link" href="mailto:techstockvip@gmail.com?subject=from cutie pie">
                 Send Yes/ no (click me)
             </a></p>
  
@@ -383,13 +395,13 @@
         // ---------------------------------------------------
         
         // --- POP-UP 1 ---
-        const dailyNickname = "Hello, Baccha ❤️";
+        const dailyNickname = "Hii my princess ❤️";
         // Use \n to create a new line
-        const dailyMessage1 = "I just wanted to remind you how special you are to me.\nCan't wait to celebrate your special day my kuchupuchu!🤭 🎉"; 
+        const dailyMessage1 = "ek baat bolu?";
 
         // --- POP-UP 2 ---
-        const dailyHeading2 = "One more thing...";
-        const dailyMessage2 = " just sending a little message to make you smile. plz can you smile and send to me 👉💗👈";
+        const dailyHeading2 = "";
+        const dailyMessage2 = "I just wanted to say that you are so beautiful. your morning smile yarr hayee 🫠.💖\n ek word bola me photo dekhte hi (awwwww... so cute yarr... 😘)\n my kuchupuchu 🤭";
 
         // ---------------------------------------------------
         // --- (No need to edit below this line) ---
@@ -524,4 +536,3 @@
     </script>
 </body>
 </html>
-
