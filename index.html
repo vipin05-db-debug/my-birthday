@@ -262,7 +262,7 @@
             font-family: 'Pacifico', cursive;
             color: #f75a98;
             margin-bottom: 10px;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
         }
         
         .modal-content p {
@@ -351,18 +351,21 @@
                 <div class="icon">⭐</div>
             </div>
         </div>
+        
         <div class="gift-message">
-            <p>Just a little more disturbance... can you open this every day.💕💫<a class="email-link" href="mailto:techstockvip@gmail.com?subject=from cutie pie">
-                Send Yes/ no (click me)
+            <p>mene jo pucha hai vo batana hai aur video me mene dekha kya smile hai meri thangachi aur hayee kya ankh mari hai sa😁😁
+            
+            <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">
+                Batao mujhe Instagram pe 💬
             </a></p>
- 
+
             <div class="loading-dots">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-    </div>
+        </div>
     
     <div class="modal-overlay" id="messageModal1">
         <div class="modal-content">
@@ -383,7 +386,11 @@
     <div class="modal-overlay" id="messageModal3">
         <div class="modal-content">
             <span class="close-button" id="closeButton3">&times;</span>
-            <h2 id="modalGreeting3"></h2>
+            
+            <video id="popupVideo" width="100%" autoplay loop muted style="display: none; border-radius: 8px; margin-bottom: 15px;">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
             <p id="modalMessage3"></p>
         </div>
     </div>
@@ -400,21 +407,67 @@
     <script>
         
         // ---------------------------------------------------
-        // --- EDIT THIS SECTION FOR YOUR DAILY MESSAGES ---
+        // --- EDIT THIS SECTION FOR YOUR MESSAGES ---
         // ---------------------------------------------------
         
-        // --- POP-UP 1 ---
-        const dailyNickname = "Sorry princess ❤️";
-        // Use \n to create a new line
-        const dailyMessage1 = "Sorry for disturbing you....\n pata nahi kya soch ke delete kar diya tha mene (sorry)";
+        // --- Define the exact time for the messages to change ---
+        // FORMAT: "Month Day, Year HH:MM:SS"
+        const messageChangeTime = new Date("Nov 2, 2025 23:52:00").getTime();
+        
+        // --- Get the current time ---
+        const currentTime = new Date().getTime();
 
-        // --- POP-UP 2 ---
-        const dailyHeading2 = "Kya bolu ab";
-        const dailyMessage2 = "kya bolu yarr.. I just want to feel special to my thangachi but don't know why I delete yesterday those msg (baccha) \n my kuchupuchu 🤭";
+        // --- Content Set A (BEFORE the change time) ---
+        const greeting1_before = "sorry princess 🥺";
+        const message1_before = "Sorry for disturbing you....\n pata nahi kya soch ke delete kar diya tha mene (sorry)";
+        
+        const greeting2_before = "Kya bolu ab";
+        const message2_before = "kya bolu yarr.. I just want to feel special to my thangachi but don't know why I delete yesterday those msg (baccha) \n my kuchupuchu 🤭";
+        
+        // No heading for popup 3
+        const message3_before = "Dhyan rakh tabiyat ka mela baccha 💖";
+        const videoSrc_before = ""; // No video before
 
-        // --- POP-UP 3 ---
-        const dailyHeading3 = ""; // <-- **I ADDED THIS**
-        const dailyMessage3 = "Dhyam rakh tabiyat ka mela baccha 💖";
+        // --- Content Set B (AFTER the change time) ---
+        // *** EDIT THESE NEW MESSAGES ***
+        const greeting1_after = "Bahut sara pyaro form Anna 💗";
+        const message1_after = "Alee le mela baccha school se aa gaya 💕\n Awww my kuchupuchu sweetie pie🤭\n hayee kitna cute hai tu muuhhhaaa😘\n (aur sachme likhte time mere Expressions bhi kuchupuchu,muhhaaa aur sweetie pie wala tha 😁(sachme ab toh sharam aa rahi hai 🫣)";
+        
+        const greeting2_after = "Kikar ho sa";
+        const message2_after = "aur aaj din kesa gaya\n batao na mujhe apne din ke bare me💖\n lunch me kya khaya? \n chal diary bata kitna HW diya hai aaj!";
+        
+        // No heading for popup 3
+        const message3_after = "aaye hayee mera sweetie pie 💕\n ye smile ke piche kya razz hai 😁";
+        
+        // *** ADD YOUR VIDEO FILE PATH OR LINK HERE ***
+        // (e.g., "my_video.mp4" or "https://example.com/video.mp4")
+        const videoSrc_after = "pallu.mp4"; // <-- IMPORTANT
+
+        // --- Declare variables to hold the *final* content ---
+        let finalGreeting1, finalMessage1;
+        let finalGreeting2, finalMessage2;
+        let finalMessage3; // Removed finalGreeting3
+        let finalVideoSrc;
+
+        // --- Logic to decide which set of messages to use ---
+        if (currentTime < messageChangeTime) {
+            // It's BEFORE 5:01 PM tomorrow. Use Set A.
+            finalGreeting1 = greeting1_before;
+            finalMessage1 = message1_before;
+            finalGreeting2 = greeting2_before;
+            finalMessage2 = message2_before;
+            finalMessage3 = message3_before; // Set message
+            finalVideoSrc = videoSrc_before;
+        } else {
+            // It's AFTER 5:01 PM tomorrow. Use Set B.
+            finalGreeting1 = greeting1_after;
+            finalMessage1 = message1_after;
+            finalGreeting2 = greeting2_after;
+            finalMessage2 = message2_after;
+            finalMessage3 = message3_after; // Set message
+            finalVideoSrc = videoSrc_after;
+        }
+
         // ---------------------------------------------------
         // --- (No need to edit below this line) ---
         // ---------------------------------------------------
@@ -461,16 +514,29 @@
         const modalMessageEl1 = document.getElementById('modalMessage1');
         const modalGreetingEl2 = document.getElementById('modalGreeting2');
         const modalMessageEl2 = document.getElementById('modalMessage2');
-        const modalGreetingEl3 = document.getElementById('modalGreeting3');
+        // Removed modalGreetingEl3
         const modalMessageEl3 = document.getElementById('modalMessage3');
+        
+        // Get the video element
+        const popupVideo = document.getElementById('popupVideo');
+        const videoSource = popupVideo.querySelector('source');
 
-        // Set the daily message text
-        modalGreetingEl1.innerHTML = dailyNickname;
-        modalMessageEl1.innerHTML = dailyMessage1;
-        modalGreetingEl2.innerHTML = dailyHeading2;
-        modalMessageEl2.innerHTML = dailyMessage2;
-        modalGreetingEl3.innerHTML = dailyHeading3; // <-- **I ADDED THIS**
-        modalMessageEl3.innerHTML = dailyMessage3;
+        // Set the daily message text using the final variables
+        modalGreetingEl1.innerHTML = finalGreeting1;
+        modalMessageEl1.innerHTML = finalMessage1;
+        modalGreetingEl2.innerHTML = finalGreeting2;
+        modalMessageEl2.innerHTML = finalMessage2;
+        // Removed modalGreetingEl3
+        modalMessageEl3.innerHTML = finalMessage3;
+        
+        // Handle the video for modal 3
+        if (finalVideoSrc && finalVideoSrc !== "") {
+            videoSource.setAttribute('src', finalVideoSrc);
+            popupVideo.load(); // Reload the video source
+            popupVideo.style.display = 'block'; // Make the video visible
+        } else {
+            popupVideo.style.display = 'none'; // Keep video hidden
+        }
         
         // --- LOGIC TO SHOW DAILY POP-UP ON LOAD ---
         const nowOnLoad = new Date().getTime();
@@ -533,7 +599,6 @@
         }
         
         // --- MODAL 2 (Second Daily Message) CONTROLS ---
-        // **I UPDATED THIS SECTION**
         closeButton2.onclick = function() {
             modal2.classList.remove('show');
             // Wait 1 second before showing the next modal
@@ -554,11 +619,20 @@
         // --- MODAL 3 (Third Daily Message) CONTROLS ---
         closeButton3.onclick = function() {
             modal3.classList.remove('show');
+            if (finalVideoSrc && finalVideoSrc !== "") {
+                 popupVideo.pause(); // Pause video on close
+                 popupVideo.currentTime = 0; // Reset video to start
+            }
         }
 
         modal3.onclick = function(event) {
+            // Only close if clicking the background, not the content inside
             if (event.target == modal3) {
                 modal3.classList.remove('show');
+                if (finalVideoSrc && finalVideoSrc !== "") {
+                    popupVideo.pause(); // Pause video on close
+                    popupVideo.currentTime = 0; // Reset video to start
+                }
             }
         }
 
