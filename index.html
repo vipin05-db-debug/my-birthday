@@ -314,7 +314,7 @@
         <div class="confetti heart"></div>
         <div class="confetti heart"></div>
         <div class="confetti heart"></div>
-        <div class="confetti heart"></div>
+        <div class.="confetti heart"></div>
         <div class="confetti heart"></div>
         <div class="confetti heart"></div>
         <div class="confetti heart"></div>
@@ -353,10 +353,9 @@
         </div>
         
         <div class="gift-message">
-            <p>mene jo pucha hai vo batana hai aur video me mene dekha kya smile hai meri thangachi aur hayee kya ankh mari hai sa😁😁
-            
-            <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">
-                Batao mujhe Instagram pe 💬
+            <p>Just a little more disturbance... can you open this every day.💕💫
+            <a class="email-link" href="mailto:techstockvip@gmail.com?subject=from cutie pie">
+                Send Yes/ no (click me)
             </a></p>
 
             <div class="loading-dots">
@@ -424,48 +423,53 @@
         const greeting2_before = "Kya bolu ab";
         const message2_before = "kya bolu yarr.. I just want to feel special to my thangachi but don't know why I delete yesterday those msg (baccha) \n my kuchupuchu 🤭";
         
-        // No heading for popup 3
         const message3_before = "Dhyan rakh tabiyat ka mela baccha 💖";
         const videoSrc_before = ""; // No video before
+        
+        // This is the HTML for the main card text BEFORE the time
+        const mainMessageP_before = `<p>Just a little more disturbance... can you open this every day.💕💫<a class="email-link" href="mailto:techstockvip@gmail.com?subject=from cutie pie">Send Yes/ no (click me)</a></p>`;
+
 
         // --- Content Set B (AFTER the change time) ---
-        // *** EDIT THESE NEW MESSAGES ***
         const greeting1_after = "Bahut sara pyaro form Anna 💗";
         const message1_after = "Alee le mela baccha school se aa gaya 💕\n Awww my kuchupuchu sweetie pie🤭\n hayee kitna cute hai tu muuhhhaaa😘\n (aur sachme likhte time mere Expressions bhi kuchupuchu,muhhaaa aur sweetie pie wala tha 😁(sachme ab toh sharam aa rahi hai 🫣)";
         
         const greeting2_after = "Kikar ho sa";
         const message2_after = "aur aaj din kesa gaya\n batao na mujhe apne din ke bare me💖\n lunch me kya khaya? \n chal diary bata kitna HW diya hai aaj!";
         
-        // No heading for popup 3
         const message3_after = "aaye hayee mera sweetie pie 💕\n ye smile ke piche kya razz hai 😁";
-        
-        // *** ADD YOUR VIDEO FILE PATH OR LINK HERE ***
-        // (e.g., "my_video.mp4" or "https://example.com/video.mp4")
         const videoSrc_after = "pallu.mp4"; // <-- IMPORTANT
+
+        // This is the HTML for the main card text AFTER the time
+        const mainMessageP_after = `<p>mene jo pucha hai vo batana hai aur video me mene dekha kya smile hai meri thangachi aur hayee kya ankh mari hai sa😁😁 <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Batao mujhe Instagram pe 💬</a></p>`;
+
 
         // --- Declare variables to hold the *final* content ---
         let finalGreeting1, finalMessage1;
         let finalGreeting2, finalMessage2;
-        let finalMessage3; // Removed finalGreeting3
+        let finalMessage3;
         let finalVideoSrc;
+        let finalMainMessageP; // <-- NEWLY ADDED
 
         // --- Logic to decide which set of messages to use ---
         if (currentTime < messageChangeTime) {
-            // It's BEFORE 5:01 PM tomorrow. Use Set A.
+            // It's BEFORE the time. Use Set A.
             finalGreeting1 = greeting1_before;
             finalMessage1 = message1_before;
             finalGreeting2 = greeting2_before;
             finalMessage2 = message2_before;
-            finalMessage3 = message3_before; // Set message
+            finalMessage3 = message3_before;
             finalVideoSrc = videoSrc_before;
+            finalMainMessageP = mainMessageP_before; // <-- NEWLY ADDED
         } else {
-            // It's AFTER 5:01 PM tomorrow. Use Set B.
+            // It's AFTER the time. Use Set B.
             finalGreeting1 = greeting1_after;
             finalMessage1 = message1_after;
             finalGreeting2 = greeting2_after;
             finalMessage2 = message2_after;
-            finalMessage3 = message3_after; // Set message
+            finalMessage3 = message3_after;
             finalVideoSrc = videoSrc_after;
+            finalMainMessageP = mainMessageP_after; // <-- NEWLY ADDED
         }
 
         // ---------------------------------------------------
@@ -498,6 +502,7 @@
         const secondsEl = document.getElementById('seconds');
         const titleEl = document.querySelector('.countdown-card h1');
         const messageEl = document.querySelector('.gift-message');
+        const giftMessagePEl = document.querySelector('.gift-message p'); // <-- NEWLY ADDED
 
         // Get the modal elements
         const modal1 = document.getElementById('messageModal1');
@@ -514,7 +519,6 @@
         const modalMessageEl1 = document.getElementById('modalMessage1');
         const modalGreetingEl2 = document.getElementById('modalGreeting2');
         const modalMessageEl2 = document.getElementById('modalMessage2');
-        // Removed modalGreetingEl3
         const modalMessageEl3 = document.getElementById('modalMessage3');
         
         // Get the video element
@@ -526,8 +530,8 @@
         modalMessageEl1.innerHTML = finalMessage1;
         modalGreetingEl2.innerHTML = finalGreeting2;
         modalMessageEl2.innerHTML = finalMessage2;
-        // Removed modalGreetingEl3
         modalMessageEl3.innerHTML = finalMessage3;
+        giftMessagePEl.outerHTML = finalMainMessageP; // <-- NEWLY ADDED
         
         // Handle the video for modal 3
         if (finalVideoSrc && finalVideoSrc !== "") {
@@ -570,10 +574,19 @@
                 hoursEl.innerHTML = 0;
                 minutesEl.innerHTML = 0;
                 secondsEl.innerHTML = 0;
-                messageEl.innerHTML = "<p>Happy Birthday! 🥳</p>";
+                
+                // We still need to check which message to show on the birthday
+                // This checks the time *again* in case the birthday hits
+                // but the time-change for the message hasn't happened yet.
+                // (This is an edge case, but good to have)
+                const nowOnBirthday = new Date().getTime();
+                if (nowOnBirthday < messageChangeTime) {
+                    giftMessagePEl.outerHTML = mainMessageP_before;
+                } else {
+                    giftMessagePEl.outerHTML = mainMessageP_after;
+                }
                 
                 // Show the BIRTHDAY Modal
-                // Only show if it hasn't been shown before
                 if (!modal4.classList.contains('show')) {
                      modal4.classList.add('show');
                 }
@@ -591,10 +604,9 @@
         modal1.onclick = function(event) {
             if (event.target == modal1) {
                 modal1.classList.remove('show');
-                // Wait 1 second before showing the next modal
                 setTimeout(function() {
                     modal2.classList.add('show'); 
-                }, 1000); // 1000ms = 1 second
+                }, 1000);
             }
         }
         
@@ -609,10 +621,9 @@
         modal2.onclick = function(event) {
             if (event.target == modal2) {
                 modal2.classList.remove('show');
-                // Wait 1 second before showing the next modal
                 setTimeout(function() {
                     modal3.classList.add('show'); 
-                }, 1000); // 1000ms = 1 second
+                }, 1000);
             }
         }
 
@@ -626,7 +637,6 @@
         }
 
         modal3.onclick = function(event) {
-            // Only close if clicking the background, not the content inside
             if (event.target == modal3) {
                 modal3.classList.remove('show');
                 if (finalVideoSrc && finalVideoSrc !== "") {
@@ -648,4 +658,3 @@
     </script>
 </body>
 </html>
-
