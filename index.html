@@ -1,1 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-R-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Thangachi 😘</title>
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Global Styles & Background --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #fff5f8 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* --- Main Card --- */
+        .countdown-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 2px solid #ffedf2;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.1);
+            padding: 25px 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- Header Title --- */
+        .countdown-card h1 {
+            font-family: 'Pacifico', cursive;
+            color: #f75a98;
+            font-size: 1.6em;
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        /* --- Timer Box Container --- */
+        .timer-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .timer-unit {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px 10px;
+            width: 80px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f9f9f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timer-unit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(247, 90, 152, 0.15);
+        }
+
+        /* --- Timer Numbers (Your Font) --- */
+        .timer-unit span {
+            display: block;
+            font-family: "Story Script", sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: #8b5fd9;
+            line-height: 1.1;
+        }
+
+        /* --- Timer Labels (e.g., "Days") --- */
+        .timer-unit p {
+            font-size: 0.8em;
+            font-weight: 500;
+            color: #e02e87;
+            margin: 4px 0;
+        }
+
+        /* --- Icons (e.g., "♡") --- */
+        .timer-unit .icon {
+            font-size: 1.2em;
+        }
+        .timer-unit:nth-child(1) .icon { color: #ff7bac; } /* Heart */
+        .timer-unit:nth-child(2) .icon { color: #69a7ff; } /* Gift */
+        .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
+        .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
+
+        /* --- Gift Message Box --- */
+        .gift-message {
+            background: #fff7fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .gift-message p {
+            color: #e667a1;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        /* --- Loading Dots Animation --- */
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .loading-dots span {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #fbc2d8;
+            animation: pulse 1.4s infinite ease-in-out;
+        }
+        .loading-dots span:nth-child(2) {
+            background: #f75a98;
+            animation-delay: 0.2s;
+        }
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.8; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+
+        /* --- Animated Confetti Background --- */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .confetti {
+            position: absolute;
+            bottom: -20px;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: floatUp 15s infinite linear;
+        }
+        .confetti.dot {
+            width: 10px;
+            height: 10px;
+            background: #ffd700; 
+        }
+        .confetti.heart {
+            width: 12px;
+            height: 12px;
+            background: #ff7bac;
+            transform: rotate(-45deg);
+        }
+        .confetti.heart::before,
+        .confetti.heart::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ff7bac;
+            border-radius: 50%;
+        }
+        .confetti.heart::before { top: -6px; left: 0; }
+        .confetti.heart::after { top: 0; left: -6px; }
+
+        @keyframes floatUp {
+            from { bottom: -20px; transform: rotate(0deg); }
+            to { bottom: 105vh; transform: rotate(360deg); }
+        }
+
+        /* --- 15 Animation Variations --- */
+        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+        .confetti:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 15s; background: #90ee90; }
+        .confetti:nth-child(3) { left: 30%; animation-delay: 5s; animation-duration: 10s; }
+        .confetti:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 18s; }
+        .confetti:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 14s; background: #add8e6; }
+        .confetti:nth-child(6) { left: 60%; animation-delay: 6s; animation-duration: 12s; }
+        .confetti:nth-child(7) { left: 70%; animation-delay: 4s; animation-duration: 17s; }
+        .confetti:nth-child(8) { left: 80%; animation-delay: 7s; animation-duration: 11s; background: #ffd700; }
+        .confetti:nth-child(9) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; }
+        .confetti:nth-child(10) { left: 5%; animation-delay: 8s; animation-duration: 13s; }
+        .confetti:nth-child(11) { left: 15%; animation-delay: 1s; animation-duration: 16s; background: #f7a04b; }
+        .confetti:nth-child(12) { left: 25%; animation-delay: 3s; animation-duration: 10s; }
+        .confetti:nth-child(13) { left: 35%; animation-delay: 5s; animation-duration: 15s; background: #90ee90; }
+        .confetti:nth-child(14) { left: 45%; animation-delay: 2s; animation-duration: 18s; }
+        .confetti:nth-child(15) { left: 55%; animation-delay: 6s; animation-duration: 11s; }
+
+        
+        /* --- Pop-up Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dimmed background */
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0; /* For fade-in animation */
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* --- Base Modal Content (for Modals 1, 2, 4) --- */
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+        
+        .modal-content h2 {
+            font-family: 'Pacifico', cursive;
+            color: #f75a98;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .modal-content p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #555;
+            white-space: pre-wrap;
+        }
+
+        .email-link {
+            display: inline-block;
+            background: #f75a993e;
+            color: #e02e87;
+            border: none;
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
+            animation: glow 1.5s infinite alternate;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: none; /* Removes underline from link */
+            transition: background 0.3s ease;
+            
+        }
+    
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+                text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
+            }
+            to {
+                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
+                text-shadow: 0 0 8px rgba(247, 90, 152, 1);
+            }
+        }
+        
+        /* --- QUIZ FLIP STYLES --- */
+        #quizModal .modal-content {
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            perspective: 1000px;
+        }
+
+        .quiz-flipper {
+            position: relative;
+            width: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            min-height: 400px; 
+        }
+
+        .quiz-flipper.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-front,
+        .quiz-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .quiz-back {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-flipper h2 {
+            font-family: 'Pacifico', cursive;
+            color: #f75a98;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        /* --- END OF FLIP STYLES --- */
+
+        
+        /* --- QUIZ CONTENT STYLES --- */
+        #quizQuestion {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        #quizOptions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-option {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #fff5f8;
+            border-color: #fbc2d8;
+        }
+        
+        #quizAnswer {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 20px;
+            min-height: 20px; /* Reserve space */
+        }
+        
+        .quiz-button {
+            display: inline-block;
+            background: #f75a98;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(247, 90, 152, 0.3);
+        }
+        
+        .quiz-button:hover {
+            background: #e02e87;
+        }
+
+        /* --- Text Input Boxes --- */
+        .quiz-input-box {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .quiz-input-box textarea {
+            width: 100%;
+            min-height: 60px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 8px;
+            margin-top: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        /* --- Punishment Box (Wrong) --- */
+        #punishmentBox p {
+            color: #d9534f;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        #sendPunishmentBtn {
+            margin-top: 10px;
+            background: #555;
+        }
+        #sendPunishmentBtn:hover {
+            background: #333;
+        }
+        
+        /* --- Correct Answer Box --- */
+         #correctAnswerBox p {
+            color: #5cb85c; /* Green text */
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        #sendCorrectAnswerBtn {
+            margin-top: 10px;
+            background: #5cb85c; /* Green button */
+        }
+        #sendCorrectAnswerBtn:hover {
+            background: #4a9f4a;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="confetti-container">
+        </div>
+
+    <div class="countdown-card">
+        <h1>Your Special Day is Almost Here💗</h1>
+        <div class="timer-container">
+            <div class="timer-unit">
+                <span id="days">0</span>
+                <p>Days</p>
+                <div class="icon">♡</div>
+            </div>
+            <div class="timer-unit">
+                <span id="hours">0</span>
+                <p>Hours</p>
+                <div class="icon">🎁</div>
+            </div>
+            <div class="timer-unit">
+                <span id="minutes">0</span>
+                <p>Minutes</p>
+                <div class="icon">🎂</div>
+            </div>
+            <div class="timer-unit">
+                <span id="seconds">0</span>
+                <p>Seconds</p>
+                <div class="icon">⭐</div>
+            </div>
+        </div>
+        
+        <div class="gift-message">
+            </div>
+    </div>
+    
+    <div class="modal-overlay" id="messageModal1">
+        <div class="modal-content">
+            <span class="close-button" id="closeButton1">&times;</span>
+            <h2 id="modalGreeting1"></h2>
+            <p id="modalMessage1"></p>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="messageModal2">
+        <div class="modal-content">
+            <span class="close-button" id="closeButton2">&times;</span>
+            <h2 id="modalGreeting2"></h2>
+            <p id="modalMessage2"></p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="quizModal">
+        <div class="modal-content">
+            <div class="quiz-flipper">
+                
+                <div class="quiz-front">
+                    <h2>A Quick Quiz! 🤭</h2>
+                    <div id="quizQuestion">Question goes here...</div>
+                    <div id="quizOptions">
+                        </div>
+                </div>
+                
+                <div class="quiz-back">
+                    <h2>Result...</h2>
+                    <div id="quizAnswer"></div>
+
+                    <div class="quiz-input-box" id="correctAnswerBox" style="display: none;">
+                        <p>Mela Baccha kuchupuchu💖</p>
+                        <textarea id="correctAnswerText" placeholder="I knew it!"></textarea>
+                        <button class="quiz-button" id="sendCorrectAnswerBtn">Send & Continue</button>
+                    </div>
+
+                    <div class="quiz-input-box" id="punishmentBox" style="display: none;">
+                        <p>Jaa ree tu me tera bhai thodi na hu</p>
+                        <textarea id="punishmentText" placeholder="Me tera bhai nahi hu byee"></textarea>
+                        <button class="quiz-button" id="sendPunishmentBtn">Send & Continue</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="birthdayModal">
+        <div class="modal-content">
+            <span class="close-button" id="closeButton4">&times;</span>
+            <h2>Happy Birthday! 🥳</h2>
+            <p>Your special day is finally here! Hope it's amazing!</p>
+        </div>
+    </div>
+
+
+    <script>
+        
+        // ---------------------------------------------------
+        // --- EDIT THIS SECTION FOR YOUR MESSAGES ---
+        // ---------------------------------------------------
+        
+        // --- Content for your popups ---
+        const finalGreeting2 = "Oyeeeeeee 💗";
+        const finalMessage2 = "Kuchupuchu karne ka mann kar raha hai bas! \n tumhari yaad aa rahi hai baccha \n\n pehle ye answer do";
+        
+        const finalGreeting1 = "kikar ho sa💗";
+        const finalMessage1 = "Pehle mujhe apne din ke bare me batao na💖\n aaj school me kya mast hua? \n diary batao kitna HW diya hai aaj!";
+        // --- This is the HTML for the main card text ---
+        const finalMainMessageP = `<p><a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a></p>`;
+
+
+        // ---------------------------------------------------
+        // --- EDIT THIS SECTION FOR YOUR QUIZ ---
+        // ---------------------------------------------------
+        
+        const quizData = [
+            {
+                question: "Question 1: Kya tujhe ek cute si pic mil sakti hai?",
+                options: ["Haan", "Nahi", "pagal hai kya"],
+                correctIndex: 0, // The first option is correct (Pink)
+                correctMessage: "yeah meri pyari thangachi",
+                wrongMessage: "mat bhje pic, me tera bhai thodina hu!"
+            },
+            {
+                question: "Question 2: Ice Cream khana hai meri thangachi?",
+                options: ["Nahi Anna", "Yes Anna", "Mami ji daatengi"],
+                correctIndex: 1, // The third option is correct
+                correctMessage: "Okay aaj ice cream aur kinder joy dono! 🍦🍫,ab karna padega samjhi",
+                wrongMessage: "kyu tujhse ice cream nahi khani, mami ji ko kuch aur bol dena!"
+            },
+            {
+                question: "Question 3: Aisi koi baat jo tujhe batani hai?",
+                options: ["Bolna hai", "ya nahi", "kya hua baccha"],
+                correctIndex: 0, // The second option is correct (all are right, but pick one)
+                correctMessage: "insta pe message karna yaha mat karna, kuch bhi likh ke send kar de ye hat jayega! 😘",
+                wrongMessage: "bol na kuch bolna hai toh" // Same message for all
+            }
+        ];
+
+
+        // ---------------------------------------------------
+        // --- (No need to edit below this line) ---
+        // ---------------------------------------------------
+
+
+        const targetDate = new Date("Dec 1, 2025 00:00:00");
+
+        function getCountdownTime() {
+            const now = new Date().getTime();
+            let year = new Date().getFullYear();
+            let countDownDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()).getTime();
+            if (now > countDownDate) {
+                countDownDate = new Date(year + 1, targetDate.getMonth(), targetDate.getDate()).getTime();
+            }
+            return countDownDate;
+        }
+        
+        const countDownDate = getCountdownTime();
+
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const titleEl = document.querySelector('.countdown-card h1');
+        
+        // --- MODIFIED: Get the gift-message div ---
+        const giftMessageDiv = document.querySelector('.gift-message');
+
+        const modal1 = document.getElementById('messageModal1');
+        const modal2 = document.getElementById('messageModal2');
+        const modal4 = document.getElementById('birthdayModal');
+        const closeButton1 = document.getElementById('closeButton1');
+        const closeButton2 = document.getElementById('closeButton2');
+        const closeButton4 = document.getElementById('closeButton4');
+
+        const modalGreetingEl1 = document.getElementById('modalGreeting1');
+        const modalMessageEl1 = document.getElementById('modalMessage1');
+        const modalGreetingEl2 = document.getElementById('modalGreeting2');
+        const modalMessageEl2 = document.getElementById('modalMessage2');
+        
+        modalGreetingEl1.innerHTML = finalGreeting1;
+        modalMessageEl1.innerHTML = finalMessage1;
+        modalGreetingEl2.innerHTML = finalGreeting2;
+        modalMessageEl2.innerHTML = finalMessage2;
+        
+        // --- MODIFIED: Set the content of the gift-message div ---
+        giftMessageDiv.innerHTML = finalMainMessageP + `<div class="loading-dots"><span></span><span></span><span></span></div>`;
+        
+        
+        const nowOnLoad = new Date().getTime();
+        const distanceOnLoad = countDownDate - nowOnLoad;
+
+        if (distanceOnLoad > 0) {
+            modal1.classList.add('show');
+        }
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            daysEl.innerHTML = days;
+            hoursEl.innerHTML = hours;
+            minutesEl.innerHTML = minutes;
+            secondsEl.innerHTML = seconds;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                titleEl.innerHTML = "Your Special Day is Here! 🎉";
+                daysEl.innerHTML = 0;
+                hoursEl.innerHTML = 0;
+                minutesEl.innerHTML = 0;
+                secondsEl.innerHTML = 0;
+                
+                // --- SIMPLIFIED: No time check needed ---
+                document.querySelector('.gift-message').innerHTML = finalMainMessageP + `<div class="loading-dots"><span></span><span></span><span></span></div>`;
+                
+                if (!modal4.classList.contains('show')) {
+                    modal4.classList.add('show');
+                }
+            }
+        }, 1000); 
+
+        // --- MODAL 1 (Daily Message) CONTROLS ---
+        closeButton1.onclick = function() {
+            modal1.classList.remove('show');
+            setTimeout(function() { modal2.classList.add('show'); }, 1000);
+        }
+        modal1.onclick = function(event) {
+            if (event.target == modal1) {
+                modal1.classList.remove('show');
+                setTimeout(function() { modal2.classList.add('show'); }, 1000);
+            }
+        }
+        
+        // --- MODAL 2 (Second Daily Message) CONTROLS ---
+        closeButton2.onclick = function() {
+            modal2.classList.remove('show');
+            setTimeout(function() { showQuiz(); }, 1000);
+        }
+        modal2.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.classList.remove('show');
+                setTimeout(function() { showQuiz(); }, 1000);
+            }
+        }
+
+        // --- MODAL 4 (Birthday) CONTROLS ---
+        closeButton4.onclick = function() { modal4.classList.remove('show'); }
+        modal4.onclick = function(event) {
+            if (event.target == modal4) { modal4.classList.remove('show'); }
+        }
+
+        // --- QUIZ LOGIC (FLIP) ---
+        const quizModal = document.getElementById('quizModal');
+        const quizFlipper = document.querySelector('.quiz-flipper');
+        
+        // --- Front of card ---
+        const quizQuestionEl = document.getElementById('quizQuestion');
+        const quizOptionsEl = document.getElementById('quizOptions');
+
+        // --- Back of card ---
+        const quizAnswerEl = document.getElementById('quizAnswer');
+        const correctAnswerBox = document.getElementById('correctAnswerBox');
+        const correctAnswerText = document.getElementById('correctAnswerText');
+        const sendCorrectAnswerBtn = document.getElementById('sendCorrectAnswerBtn');
+        const punishmentBox = document.getElementById('punishmentBox');
+        const punishmentText = document.getElementById('punishmentText');
+        const sendPunishmentBtn = document.getElementById('sendPunishmentBtn');
+
+        let currentQuestionIndex = 0;
+
+        function showQuiz() {
+            currentQuestionIndex = 0;
+            displayQuestion(currentQuestionIndex);
+            quizModal.classList.add('show');
+        }
+
+        function displayQuestion(index) {
+            quizFlipper.classList.remove('is-flipped');
+            const questionData = quizData[index];
+            quizQuestionEl.innerText = questionData.question;
+            quizOptionsEl.innerHTML = '';
+
+            questionData.options.forEach((option, i) => {
+                const optionEl = document.createElement('div');
+                optionEl.classList.add('quiz-option');
+                optionEl.innerText = option;
+                optionEl.addEventListener('click', () => checkAnswer(i, questionData));
+                quizOptionsEl.appendChild(optionEl);
+            });
+            
+            correctAnswerBox.style.display = 'none';
+            punishmentBox.style.display = 'none';
+            correctAnswerText.value = '';
+            punishmentText.value = '';
+        }
+
+        function checkAnswer(selectedIndex, questionData) {
+            if (selectedIndex === questionData.correctIndex) {
+                quizAnswerEl.innerText = questionData.correctMessage;
+                quizAnswerEl.style.color = "#5cb85c"; 
+                correctAnswerBox.style.display = 'block'; 
+                punishmentBox.style.display = 'none';
+            } else {
+                quizAnswerEl.innerText = questionData.wrongMessage;
+                quizAnswerEl.style.color = "#d9534f"; 
+                correctAnswerBox.style.display = 'none';
+                punishmentBox.style.display = 'block'; 
+            }
+            quizFlipper.classList.add('is-flipped');
+        }
+        
+        function loadNextStep() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(currentQuestionIndex);
+            } else {
+                quizModal.classList.remove('show');
+                setTimeout(() => { 
+                    currentQuestionIndex = 0; 
+                    quizFlipper.classList.remove('is-flipped');
+                }, 500);
+            }
+        }
+        
+        function sendDataToEmail(message, index, answerType) {
+            const questionText = quizData[index].question;
+            const emailSubject = `Quiz: ${answerType} for Q${index + 1}`;
+            
+            const formData = new FormData();
+            formData.append('_subject', emailSubject);
+            formData.append('Question', questionText);
+            formData.append('Answer_Type', answerType);
+            formData.append('Message', message);
+            
+            fetch('https://formsubmit.co/techstockvip@gmail.com', {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).catch(error => console.log('Error sending form:', error));
+        }
+
+        // --- Button Clicks (on the BACK of the card) ---
+        sendCorrectAnswerBtn.onclick = function() {
+            const message = correctAnswerText.value;
+            if (message.trim() === "") {
+                alert("You must write a message! compulsory 😠");
+                return; 
+            }
+            sendDataToEmail(message, currentQuestionIndex, "Correct Answer");
+            loadNextStep();
+        }
+
+        sendPunishmentBtn.onclick = function() {
+            const message = punishmentText.value;
+            if (message.trim() === "") {
+                alert("You must write a message! compulsory 😠");
+                return; 
+            }
+            sendDataToEmail(message, currentQuestionIndex, "Wrong Answer (Punishment)");
+            loadNextStep();
+        }
+
+    </script>
+</body>
+</html>
