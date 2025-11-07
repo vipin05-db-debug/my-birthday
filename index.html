@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Thangachi 😘</title>
-    <meta property="og:title" content="My Thangachi 😘">
-    <meta property="og:description" content="Kikar ho">
-    <meta property="og:type" content="website">
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Global Styles --- */
+        /* --- Global Styles & Background --- */
         * {
             margin: 0;
             padding: 0;
@@ -29,172 +26,7 @@
             overflow: hidden;
         }
 
-        /* ================= TRAP STYLES START ================= */
-        #trap-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            transition: opacity 0.8s ease-out;
-        }
-
-        .trap-content {
-            max-width: 500px;
-            text-align: center;
-            animation: fadeIn 1s ease;
-        }
-
-        /* Screen 1: The Bait */
-        #bait-screen h2 {
-            color: #333;
-            font-weight: 500;
-            line-height: 1.5;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-
-        .fake-link {
-            color: #0095f6; /* Instagram blue-ish */
-            text-decoration: underline;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1em;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-        }
-        .fake-link:hover {
-            background: #f0f8ff;
-        }
-
-        /* Generic Modal Styles */
-        .trap-modal {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border: 2px solid #eee;
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; /* Needed for absolute positioning of the 'X' */
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* The new Cross/Close Icon style */
-        .close-trap {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            color: #aaa;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.3s;
-            z-index: 2;
-        }
-        .close-trap:hover {
-            color: #e91e63;
-        }
-
-        /* Popup 1: Chachudari */
-        #popup-chachudari h1 {
-            font-family: 'Nunito', sans-serif;
-            color: #000;
-            font-size: 2.5em;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        #popup-chachudari p {
-            color: #444;
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        .angry-btn {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
-            transition: transform 0.2s;
-        }
-        .angry-btn:hover { transform: scale(1.05); background: #b71c1c; }
-
-        /* Popup 2: Punishment */
-        #popup-punishment h1 {
-            color: #e91e63;
-            font-family: 'Pacifico', cursive;
-            margin-bottom: 20px;
-            margin-top: 15px; /* Added space because of the 'X' icon above it */
-        }
-        #popup-punishment p {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Popup 3: Final Demand */
-        #popup-final p.final-msg {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .punishment-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ffb6c1;
-            border-radius: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1em;
-            margin-bottom: 20px;
-            outline: none;
-        }
-        .punishment-input:focus {
-            border-color: #e91e63;
-        }
-        .submit-btn {
-            background: linear-gradient(45deg, #ff7bac, #f75a98);
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            font-size: 1.1em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 5px 15px rgba(247, 90, 152, 0.4);
-        }
-
-        /* ================= TRAP STYLES END ================= */
-
-        /* --- Main Card Styles (Hidden Initially) --- */
-        .countdown-card-wrapper {
-            display: none;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-        }
+        /* --- Main Card --- */
         .countdown-card {
             background: #ffffff;
             border-radius: 24px;
@@ -207,6 +39,8 @@
             position: relative;
             z-index: 10;
         }
+
+        /* --- Header Title --- */
         .countdown-card h1 {
             font-family: 'Pacifico', cursive;
             color: #f75a98;
@@ -214,12 +48,15 @@
             font-weight: 400;
             margin-bottom: 25px;
         }
+
+        /* --- Timer Box Container --- */
         .timer-container {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin-bottom: 25px;
         }
+
         .timer-unit {
             background: #fff;
             border-radius: 12px;
@@ -229,10 +66,13 @@
             border: 1px solid #f9f9f9;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .timer-unit:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(247, 90, 152, 0.15);
         }
+
+        /* --- Timer Numbers --- */
         .timer-unit span {
             display: block;
             font-family: "Story Script", sans-serif;
@@ -241,24 +81,39 @@
             color: #8b5fd9;
             line-height: 1.1;
         }
+
+        /* --- Timer Labels --- */
         .timer-unit p {
             font-size: 0.8em;
             font-weight: 500;
             color: #e02e87;
             margin: 4px 0;
         }
-        .timer-unit .icon { font-size: 1.2em; }
-        .timer-unit:nth-child(1) .icon { color: #ff7bac; }
-        .timer-unit:nth-child(2) .icon { color: #69a7ff; }
-        .timer-unit:nth-child(3) .icon { color: #f7a04b; }
-        .timer-unit:nth-child(4) .icon { color: #ffd700; }
 
+        /* --- Icons --- */
+        .timer-unit .icon {
+            font-size: 1.2em;
+        }
+        .timer-unit:nth-child(1) .icon { color: #ff7bac; } /* Heart */
+        .timer-unit:nth-child(2) .icon { color: #69a7ff; } /* Gift */
+        .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
+        .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
+
+        /* --- Gift Message Box --- */
         .gift-message {
             background: #fff7fa;
             border-radius: 12px;
             padding: 15px;
             margin-top: 10px;
         }
+
+        .gift-message p {
+            color: #e667a1;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        /* --- The "Button" Link Styles --- */
         .email-link {
             display: inline-block;
             background: #f75a993e;
@@ -276,10 +131,17 @@
             text-decoration: none;
             transition: background 0.3s ease;
         }
+    
         @keyframes glow {
-            from { box-shadow: 0 0 8px rgba(247, 90, 152, 0.6); }
-            to { box-shadow: 0 0 16px rgba(247, 90, 152, 1); }
+            from {
+                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+            }
+            to {
+                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
+            }
         }
+
+        /* --- Loading Dots Animation (kept for decoration if needed) --- */
         .loading-dots {
             display: flex;
             justify-content: center;
@@ -293,167 +155,181 @@
             background: #fbc2d8;
             animation: pulse 1.4s infinite ease-in-out;
         }
-        .loading-dots span:nth-child(2) { background: #f75a98; animation-delay: 0.2s; }
-        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .loading-dots span:nth-child(2) {
+            background: #f75a98;
+            animation-delay: 0.2s;
+        }
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
         @keyframes pulse {
             0%, 80%, 100% { transform: scale(0.8); opacity: 0.8; }
             40% { transform: scale(1); opacity: 1; }
         }
 
+
+        /* --- Animated Confetti Background --- */
         .confetti-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
         }
+
         .confetti {
-            position: absolute; bottom: -20px; border-radius: 50%; opacity: 0.7; animation: floatUp 15s infinite linear;
+            position: absolute;
+            bottom: -20px;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: floatUp 15s infinite linear;
         }
-        .confetti.dot { width: 10px; height: 10px; background: #ffd700; }
+        .confetti.dot {
+            width: 10px;
+            height: 10px;
+            background: #ffd700; 
+        }
         .confetti.heart {
-            width: 12px; height: 12px; background: #ff7bac; transform: rotate(-45deg);
+            width: 12px;
+            height: 12px;
+            background: #ff7bac;
+            transform: rotate(-45deg);
         }
-        .confetti.heart::before, .confetti.heart::after {
-            content: ''; position: absolute; width: 12px; height: 12px; background: #ff7bac; border-radius: 50%;
+        .confetti.heart::before,
+        .confetti.heart::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ff7bac;
+            border-radius: 50%;
         }
         .confetti.heart::before { top: -6px; left: 0; }
         .confetti.heart::after { top: 0; left: -6px; }
+
         @keyframes floatUp {
             from { bottom: -20px; transform: rotate(0deg); }
             to { bottom: 105vh; transform: rotate(360deg); }
         }
+
+        /* --- 15 Animation Variations for Confetti --- */
         .confetti:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
         .confetti:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 15s; background: #90ee90; }
         .confetti:nth-child(3) { left: 30%; animation-delay: 5s; animation-duration: 10s; }
         .confetti:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 18s; }
         .confetti:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 14s; background: #add8e6; }
+        .confetti:nth-child(6) { left: 60%; animation-delay: 6s; animation-duration: 12s; }
+        .confetti:nth-child(7) { left: 70%; animation-delay: 4s; animation-duration: 17s; }
+        .confetti:nth-child(8) { left: 80%; animation-delay: 7s; animation-duration: 11s; background: #ffd700; }
+        .confetti:nth-child(9) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; }
+        .confetti:nth-child(10) { left: 5%; animation-delay: 8s; animation-duration: 13s; }
+        .confetti:nth-child(11) { left: 15%; animation-delay: 1s; animation-duration: 16s; background: #f7a04b; }
+        .confetti:nth-child(12) { left: 25%; animation-delay: 3s; animation-duration: 10s; }
+        .confetti:nth-child(13) { left: 35%; animation-delay: 5s; animation-duration: 15s; background: #90ee90; }
+        .confetti:nth-child(14) { left: 45%; animation-delay: 2s; animation-duration: 18s; }
+        .confetti:nth-child(15) { left: 55%; animation-delay: 6s; animation-duration: 11s; }
+
     </style>
 </head>
 <body>
 
-    <div id="trap-overlay">
-        <div id="bait-screen" class="trap-content">
-            <h2>Birthday tak intejar nahi ho raha meri cutie pie toh is link per click karke dekh kesa laga Surprise 🫣</h2>
-            <span id="trigger-fake-link" class="fake-link">https://pallu.com/birthday/surprise</span>
-        </div>
-
-        <div id="popup-chachudari" class="trap-content trap-modal">
-            <h1>Chachudari 😠</h1>
-            <p>me itni mehnat se bana raha hu aur tune link pe click bhi kar diya, aisa nahi ki bhai ko puch lu ki aaj hi kese surprise bataraha hai per..... maharani sahiba Ko sabar nahi 😤</p>
-            <button id="btn-very-bad" class="angry-btn">Very bad girl</button>
-        </div>
-
-        <div id="popup-punishment" class="trap-content trap-modal">
-            <span id="close-punishment" class="close-trap" title="Close">&times;</span>
-            
-            <h1>Punishment Time</h1>
-            <p>teri Punishment ye hai ki teri cute voice me ek song gana padega.</p>
-        </div>
-
-         <div id="popup-final" class="trap-content trap-modal">
-            <p class="final-msg">Mujhe kuch nahi sunna gana gana padega Teri punishment hai Tune gussa dila diya tujhe thoda sa bhi khatavv koni🙂‍↔️</p>
-            <input type="text" id="punishment-msg" class="punishment-input" placeholder="naraj hu me, jaa thangachi..">
-            <button id="btn-final-submit" class="submit-btn">kuch bolna hai😤</button>
-        </div>
-    </div>
     <div class="confetti-container">
         <div class="confetti heart"></div>
         <div class="confetti dot"></div>
         <div class="confetti heart" style="left: 85%"></div>
         <div class="confetti dot" style="left: 15%; background: #69a7ff;"></div>
-        <div class="confetti heart" style="left: 55%; animation-delay: 6s;"></div>
     </div>
 
-    <div id="main-card-wrapper" class="countdown-card-wrapper" style="display: none;">
-        <div class="countdown-card">
-            <h1>Your Special Day is Almost Here💗</h1>
-            <div class="timer-container">
-                <div class="timer-unit"><span id="days">0</span><p>Days</p><div class="icon">♡</div></div>
-                <div class="timer-unit"><span id="hours">0</span><p>Hours</p><div class="icon">🎁</div></div>
-                <div class="timer-unit"><span id="minutes">0</span><p>Minutes</p><div class="icon">🎂</div></div>
-                <div class="timer-unit"><span id="seconds">0</span><p>Seconds</p><div class="icon">⭐</div></div>
+    <div class="countdown-card">
+        <h1>Your Special Day is Almost Here💗</h1>
+        <div class="timer-container">
+            <div class="timer-unit">
+                <span id="days">0</span>
+                <p>Days</p>
+                <div class="icon">♡</div>
             </div>
-            <div class="gift-message">
-                <p>Aaj din kesa gaya batao na kya hua aaj school me 😁. jab me puchu "aaj kya hua" toh bolana chaiye "aaj pata hai kya hua" samjhi 😅<!--<a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a>--></p>
-                <div class="loading-dots"><span></span><span></span><span></span></div>
+            <div class="timer-unit">
+                <span id="hours">0</span>
+                <p>Hours</p>
+                <div class="icon">🎁</div>
             </div>
+            <div class="timer-unit">
+                <span id="minutes">0</span>
+                <p>Minutes</p>
+                <div class="icon">🎂</div>
+            </div>
+            <div class="timer-unit">
+                <span id="seconds">0</span>
+                <p>Seconds</p>
+                <div class="icon">⭐</div>
+            </div>
+        </div>
+        
+        <div class="gift-message">
+            <p>
+                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a>
+            </p>
+            <div class="loading-dots"><span></span><span></span><span></span></div>
         </div>
     </div>
 
     <script>
-        // --- SECRET NOTIFICATIONS CONFIG ---
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1436304708401762385/x9NpS2nAs03FV2VD0ABvaEk6vae2t5I6HuQK5_doc3t8s9XCAvvyrtjDoL3tnFV1anZ2"; // Paste Discord Webhook URL here if you have one
+        // --- Target Date (Dec 1st) ---
+        const targetDate = new Date("Dec 1, 2025 00:00:00");
 
-        function sendSecretNotify(message) {
-            console.log("Secret Notification: " + message);
-            if (WEBHOOK_URL) {
-                 fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ content: "🚨 **TRAP ALERT:** " + message })
-                }).catch(err => console.log("Webhook Error", err));
+        function getCountdownTime() {
+            const now = new Date().getTime();
+            let year = new Date().getFullYear();
+            // Ensure targetDate uses current year if passed, or next year
+             let countDownDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()).getTime();
+
+            // If the date has already passed this year, set it for next year
+            if (now > countDownDate) {
+                 countDownDate = new Date(year + 1, targetDate.getMonth(), targetDate.getDate()).getTime();
             }
+            // OVERRIDE for specific year if needed, but your original code used this logic.
+            // Since you hardcoded 2025 above, let's stick to that explicitly:
+            return new Date("Dec 1, 2025 00:00:00").getTime();
         }
+        
+        const countDownDate = getCountdownTime();
 
-        // --- TRAP SEQUENCE ---
-        const trapOverlay = document.getElementById('trap-overlay');
-        const baitScreen = document.getElementById('bait-screen');
-        const popupChachu = document.getElementById('popup-chachudari');
-        const popupPunish = document.getElementById('popup-punishment');
-        const popupFinal = document.getElementById('popup-final');
-        const mainCardWrapper = document.getElementById('main-card-wrapper');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const titleEl = document.querySelector('.countdown-card h1');
 
-        // 1. Click Fake Link
-        document.getElementById('trigger-fake-link').addEventListener('click', () => {
-            baitScreen.style.display = 'none';
-            popupChachu.style.display = 'block';
-            sendSecretNotify("She clicked the fake link! 🎣");
-        });
-
-        // 2. Click "Very bad girl" -> Show punishment with 'X'
-        document.getElementById('btn-very-bad').addEventListener('click', () => {
-            popupChachu.style.display = 'none';
-            popupPunish.style.display = 'block';
-        });
-
-        // 3. Click the 'X' (Crossover) -> Triggers final demand
-        document.getElementById('close-punishment').addEventListener('click', () => {
-            popupPunish.style.display = 'none';
-            popupFinal.style.display = 'block';
-        });
-
-        // 4. Final Submit -> Show real countdown
-        document.getElementById('btn-final-submit').addEventListener('click', () => {
-            const userPromise = document.getElementById('punishment-msg').value;
-            sendSecretNotify("Punishment reply: " + (userPromise || "[Blank]"));
-            trapOverlay.style.opacity = '0';
-            setTimeout(() => {
-                trapOverlay.style.display = 'none';
-                mainCardWrapper.style.display = 'flex';
-                setTimeout(() => mainCardWrapper.style.opacity = '1', 50);
-            }, 800);
-        });
-
-        // --- COUNTDOWN LOGIC ---
-        const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
-        const daysEl = document.getElementById('days'), hoursEl = document.getElementById('hours'), minutesEl = document.getElementById('minutes'), secondsEl = document.getElementById('seconds'), titleEl = document.querySelector('.countdown-card h1');
-
+        // Update the count down every 1 second
         const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
-            daysEl.innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
-            hoursEl.innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutesEl.innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            secondsEl.innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
 
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result
+            daysEl.innerHTML = days;
+            hoursEl.innerHTML = hours;
+            minutesEl.innerHTML = minutes;
+            secondsEl.innerHTML = seconds;
+
+            // If the count down is finished
             if (distance < 0) {
                 clearInterval(countdownInterval);
                 titleEl.innerHTML = "Your Special Day is Here! 🎉";
-                daysEl.innerHTML = 0; hoursEl.innerHTML = 0; minutesEl.innerHTML = 0; secondsEl.innerHTML = 0;
+                daysEl.innerHTML = 0;
+                hoursEl.innerHTML = 0;
+                minutesEl.innerHTML = 0;
+                secondsEl.innerHTML = 0;
             }
         }, 1000);
     </script>
 </body>
 </html>
-
-
-
-
-
