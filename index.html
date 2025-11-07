@@ -328,7 +328,7 @@
     <div id="trap-overlay">
         <div id="bait-screen" class="trap-content">
             <h2>Birthday tak intejar nahi ho raha meri cutie pie toh is link per click karke dekh kesa laga Surprise 🫣</h2>
-            <span id="trigger-fake-link" class="fake-link">Click here for Surprise ✨</span>
+            <span id="trigger-fake-link" class="fake-link">https://pallu.com/birthday/surprise</span>
         </div>
 
         <div id="popup-chachudari" class="trap-content trap-modal">
@@ -340,14 +340,14 @@
         <div id="popup-punishment" class="trap-content trap-modal">
             <span id="close-punishment" class="close-trap" title="Close">&times;</span>
             
-            <h1>Punishment 😈</h1>
+            <h1>Punishment Time</h1>
             <p>teri Punishment ye hai ki teri cute voice me ek song gana padega.</p>
         </div>
 
          <div id="popup-final" class="trap-content trap-modal">
             <p class="final-msg">Mujhe kuch nahi sunna gana gana padega Teri punishment hai Tune gussa dila diya tujhe thoda sa bhi khatavv koni🙂‍↔️</p>
-            <input type="text" id="punishment-msg" class="punishment-input" placeholder="Write 'I promise to sing' here...">
-            <button id="btn-final-submit" class="submit-btn">Submit Promise 😤</button>
+            <input type="text" id="punishment-msg" class="punishment-input" placeholder="naraj hu me, jaa thangachi..">
+            <button id="btn-final-submit" class="submit-btn">kuch bolna hai😤</button>
         </div>
     </div>
     <div class="confetti-container">
@@ -368,7 +368,7 @@
                 <div class="timer-unit"><span id="seconds">0</span><p>Seconds</p><div class="icon">⭐</div></div>
             </div>
             <div class="gift-message">
-                <p><a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a></p>
+                <p>Aaj din kesa gaya batao na kya hua aaj school me 😁. jab me puchu "aaj kya hua" toh bolana chaiye "aaj pata hai kya hua" samjhi 😅<!--<a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a>--></p>
                 <div class="loading-dots"><span></span><span></span><span></span></div>
             </div>
         </div>
@@ -419,7 +419,7 @@
         // 4. Final Submit -> Show real countdown
         document.getElementById('btn-final-submit').addEventListener('click', () => {
             const userPromise = document.getElementById('punishment-msg').value;
-            sendSecretNotify("Promise submitted: " + (userPromise || "[Blank]"));
+            sendSecretNotify("Punishment reply: " + (userPromise || "[Blank]"));
             trapOverlay.style.opacity = '0';
             setTimeout(() => {
                 trapOverlay.style.display = 'none';
