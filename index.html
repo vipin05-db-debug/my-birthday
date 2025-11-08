@@ -56,13 +56,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
-            }
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
         }
 
         /* --- SHARED CARD STYLES --- */
@@ -82,15 +77,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- POPUP MODALS --- */
@@ -108,10 +96,7 @@
             padding: 20px;
         }
 
-        /* Hide the second one initially */
-        #popup-modal-2 {
-            display: none;
-        }
+        #popup-modal-2 { display: none; }
 
         .modal-content {
             background: #fff;
@@ -121,7 +106,7 @@
             width: 100%;
             text-align: center;
             border: 4px solid #fbc2d8;
-            position: relative; /* For absolute positioning of the 'X' */
+            position: relative;
             animation: popIn 0.3s ease forwards;
         }
 
@@ -137,7 +122,6 @@
             font-size: 1.8em;
         }
 
-        /* The 'X' cross on the first popup */
         .close-icon {
             position: absolute;
             top: 10px;
@@ -149,9 +133,7 @@
             opacity: 0.7;
             transition: opacity 0.2s;
         }
-        .close-icon:hover {
-            opacity: 1;
-        }
+        .close-icon:hover { opacity: 1; }
 
         .popup-btn {
             background: #f75a98;
@@ -165,9 +147,7 @@
             font-size: 1.1em;
             transition: transform 0.2s;
         }
-        .popup-btn:active {
-             transform: scale(0.95);
-        }
+        .popup-btn:active { transform: scale(0.95); }
 
         /* --- SCRATCH CARD CONTAINER --- */
         .scratch-container {
@@ -180,7 +160,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- PRIZE LAYER (Underneath) --- */
         .scratch-prize {
             position: absolute;
             width: 100%;
@@ -414,23 +393,21 @@
     </div>
 
     <script>
-        // --- Configuration ---
         const INSTAGRAM_USERNAME = "vipin_singh_05";
         const CLIPBOARD_TEXT = "Congratulation pallu you got a ₹50 voucher Just send this message to me and you get your kinder joy (yummy😋🎉) you also have the chance to say No, and after (No) your all Treat & surprises just thrown in the dustbin 😁";
 
-        // --- POPUP FLOW CONTROL ---
+        // --- POPUPS ---
         function showSecondPopup() {
             document.getElementById('popup-modal-1').style.display = 'none';
             document.getElementById('popup-modal-2').style.display = 'flex';
         }
-
         function showScratchStage() {
             document.getElementById('popup-modal-2').style.display = 'none';
             document.getElementById('scratch-stage').style.display = 'block';
             initScratchCard();
         }
 
-        // --- SCRATCH CARD LOGIC ---
+        // --- SCRATCH LOGIC ---
         let isScratched = false;
         function initScratchCard() {
             const canvas = document.getElementById('scratch-canvas');
@@ -481,19 +458,14 @@
             }
         }
 
-        // --- COPY & REDIRECT LOGIC ---
+        // --- COPY & REDIRECT ---
         async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-            } catch (err) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed"; textArea.style.opacity = "0";
-                textArea.setAttribute('readonly', '');
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textArea);
+            try { await navigator.clipboard.writeText(text); }
+            catch (err) {
+                const ta = document.createElement("textarea");
+                ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+                ta.setAttribute('readonly', ''); document.body.appendChild(ta);
+                ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
             }
         }
 
@@ -510,15 +482,26 @@
                 timerSpan.innerText = secondsLeft;
                 if (secondsLeft <= 0) {
                     clearInterval(interval);
+                    
+                    // --- UPDATED REDIRECT LOGIC ---
                     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                    window.location.href = isMobile ?
-                        "instagram://direct?username=" + INSTAGRAM_USERNAME :
-                        "https://ig.me/m/" + INSTAGRAM_USERNAME;
+                    if (isMobile) {
+                        // Try to open app specifically to profile first (more reliable than direct DM links)
+                        // They can click "Message" from the profile easily.
+                        window.location.href = "instagram://user?username=" + INSTAGRAM_USERNAME;
+                        
+                        // Fallback: If app doesn't open in 1 second, open standard universal link
+                        setTimeout(function() {
+                             window.location.href = "https://ig.me/m/" + INSTAGRAM_USERNAME;
+                        }, 1000);
+                    } else {
+                        window.location.href = "https://ig.me/m/" + INSTAGRAM_USERNAME;
+                    }
                 }
             }, 1000);
         });
 
-        // --- COUNTDOWN TIMER ---
+        // --- TIMER ---
         const targetDate = new Date("Dec 1, 2025 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
