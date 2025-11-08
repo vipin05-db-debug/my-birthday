@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Thangachi 😘</title>
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        /* --- Global Styles & Background --- */
+        /* --- Global Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -26,8 +29,44 @@
             overflow: hidden;
         }
 
-        /* --- Main Card --- */
-        .countdown-card {
+        /* --- REDIRECT BANNER --- */
+        #redirect-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #8b5fd9;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: 700;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        #redirect-banner .sub-text {
+            display: block;
+            font-weight: 400;
+            font-size: 0.85em;
+            opacity: 0.95;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* --- SHARED CARD STYLES --- */
+        .main-card {
             background: #ffffff;
             border-radius: 24px;
             border: 2px solid #ffedf2;
@@ -38,18 +77,171 @@
             text-align: center;
             position: relative;
             z-index: 10;
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
         }
 
-        /* --- Header Title --- */
-        .countdown-card h1 {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- POPUP MODAL --- */
+        #popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 24px;
+            max-width: 400px;
+            text-align: center;
+            border: 4px solid #fbc2d8;
+        }
+
+        .modal-content h2 {
+            font-family: 'Pacifico', cursive;
+            color: #f75a98;
+            margin-bottom: 15px;
+        }
+
+        .close-popup-btn {
+            background: #f75a98;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- SCRATCH CARD CONTAINER --- */
+        .scratch-container {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- PRIZE LAYER (Underneath) --- */
+        .scratch-prize {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Clips the pseudo-element's blur */
+        }
+
+        /* This is the blurred background image */
+        .scratch-prize::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('joy.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(1.5px);
+            /* Blur applied ONLY to the background */
+            z-index: 1;
+        }
+
+        /* This is the SHARP text on top */
+        .scratch-prize h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 2em;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 4px 4px 10px  rgb(0, 0, 0);
+            position: relative;
+            /* Sit on top of the pseudo-element */
+            z-index: 2;
+            /* Sit on top of the pseudo-element */
+            filter: none;
+            /* Explicitly no blur */
+        }
+
+        /* --- CONGRATS TEXT (Between card and button) --- */
+        #congrats-msg {
+            display: none;
+            font-weight: 600;
+            font-size: 1em;
+            color: #000000;
+            margin: 15px 0;
+        }
+
+        /* --- SCRATCH CANVAS (Top Layer) --- */
+        #scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            touch-action: none;
+        }
+
+        #claim-button {
+            display: none;
+            background: linear-gradient(45deg, #f75a98, #8b5fd9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            animation: pulseBtn 1.5s infinite;
+        }
+
+        @keyframes pulseBtn {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- COUNTDOWN STAGE --- */
+        #countdown-stage h1 {
             font-family: 'Pacifico', cursive;
             color: #f75a98;
             font-size: 1.6em;
-            font-weight: 400;
             margin-bottom: 25px;
         }
 
-        /* --- Timer Box Container --- */
         .timer-container {
             display: flex;
             justify-content: space-between;
@@ -64,17 +256,9 @@
             width: 80px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             border: 1px solid #f9f9f9;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .timer-unit:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(247, 90, 152, 0.15);
-        }
-
-        /* --- Timer Numbers --- */
         .timer-unit span {
-            display: block;
             font-family: "Story Script", sans-serif;
             font-size: 2em;
             font-weight: 700;
@@ -82,7 +266,6 @@
             line-height: 1.1;
         }
 
-        /* --- Timer Labels --- */
         .timer-unit p {
             font-size: 0.8em;
             font-weight: 500;
@@ -90,86 +273,22 @@
             margin: 4px 0;
         }
 
-        /* --- Icons --- */
-        .timer-unit .icon {
-            font-size: 1.2em;
-        }
-        .timer-unit:nth-child(1) .icon { color: #ff7bac; } /* Heart */
-        .timer-unit:nth-child(2) .icon { color: #69a7ff; } /* Gift */
-        .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
-        .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
-
-        /* --- Gift Message Box --- */
         .gift-message {
             background: #fff7fa;
             border-radius: 12px;
             padding: 15px;
             margin-top: 10px;
-        }
-
-        .gift-message p {
             color: #e667a1;
-            font-size: 0.9em;
-            margin-bottom: 12px;
         }
 
-        /* --- The "Button" Link Styles --- */
-        .email-link {
-            display: inline-block;
-            background: #f75a993e;
-            color: #e02e87;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
-            animation: glow 1.5s infinite alternate;
-            font-size: 0.9em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-    
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            }
-            to {
-                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
-            }
-        }
-
-        /* --- Loading Dots Animation (kept for decoration if needed) --- */
-        .loading-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
+        .gift-message .sub-text {
+            font-size: 0.85em;
+            opacity: 0.8;
             margin-top: 10px;
-        }
-        .loading-dots span {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #fbc2d8;
-            animation: pulse 1.4s infinite ease-in-out;
-        }
-        .loading-dots span:nth-child(2) {
-            background: #f75a98;
-            animation-delay: 0.2s;
-        }
-        .loading-dots span:nth-child(3) {
-            animation-delay: 0.4s;
+            line-height: 1.4;
         }
 
-        @keyframes pulse {
-            0%, 80%, 100% { transform: scale(0.8); opacity: 0.8; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-
-        /* --- Animated Confetti Background --- */
+        /* --- Confetti Animation --- */
         .confetti-container {
             position: absolute;
             top: 0;
@@ -178,6 +297,7 @@
             height: 100%;
             overflow: hidden;
             z-index: 1;
+            pointer-events: none;
         }
 
         .confetti {
@@ -187,17 +307,20 @@
             opacity: 0.7;
             animation: floatUp 15s infinite linear;
         }
+
         .confetti.dot {
             width: 10px;
             height: 10px;
-            background: #ffd700; 
+            background: #ffd700;
         }
+
         .confetti.heart {
             width: 12px;
             height: 12px;
             background: #ff7bac;
             transform: rotate(-45deg);
         }
+
         .confetti.heart::before,
         .confetti.heart::after {
             content: '';
@@ -207,129 +330,218 @@
             background: #ff7bac;
             border-radius: 50%;
         }
-        .confetti.heart::before { top: -6px; left: 0; }
-        .confetti.heart::after { top: 0; left: -6px; }
 
-        @keyframes floatUp {
-            from { bottom: -20px; transform: rotate(0deg); }
-            to { bottom: 105vh; transform: rotate(360deg); }
+        .confetti.heart::before {
+            top: -6px;
+            left: 0;
         }
 
-        /* --- 15 Animation Variations for Confetti --- */
-        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
-        .confetti:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 15s; background: #90ee90; }
-        .confetti:nth-child(3) { left: 30%; animation-delay: 5s; animation-duration: 10s; }
-        .confetti:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 18s; }
-        .confetti:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 14s; background: #add8e6; }
-        .confetti:nth-child(6) { left: 60%; animation-delay: 6s; animation-duration: 12s; }
-        .confetti:nth-child(7) { left: 70%; animation-delay: 4s; animation-duration: 17s; }
-        .confetti:nth-child(8) { left: 80%; animation-delay: 7s; animation-duration: 11s; background: #ffd700; }
-        .confetti:nth-child(9) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; }
-        .confetti:nth-child(10) { left: 5%; animation-delay: 8s; animation-duration: 13s; }
-        .confetti:nth-child(11) { left: 15%; animation-delay: 1s; animation-duration: 16s; background: #f7a04b; }
-        .confetti:nth-child(12) { left: 25%; animation-delay: 3s; animation-duration: 10s; }
-        .confetti:nth-child(13) { left: 35%; animation-delay: 5s; animation-duration: 15s; background: #90ee90; }
-        .confetti:nth-child(14) { left: 45%; animation-delay: 2s; animation-duration: 18s; }
-        .confetti:nth-child(15) { left: 55%; animation-delay: 6s; animation-duration: 11s; }
+        .confetti.heart::after {
+            top: 0;
+            left: -6px;
+        }
 
+        @keyframes floatUp {
+            to {
+                bottom: 105vh;
+                transform: rotate(360deg);
+            }
+        }
+
+        .confetti:nth-child(1) {
+            left: 10%;
+            animation-duration: 12s;
+        }
+
+        .confetti:nth-child(2) {
+            left: 60%;
+            animation-delay: 2s;
+            background: #69a7ff;
+        }
+
+        /* --- Gradient for "Scratch to Reveal!" text --- */
+        #scratch-stage h2 {
+            font-family:cursive;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #f75a98, #8b5fd9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
     </style>
 </head>
+
 <body>
+
+    <div id="redirect-banner">
+        Wait for <span id="redirect-timer">15</span>s... 💌
+    </div>
 
     <div class="confetti-container">
         <div class="confetti heart"></div>
-        <div class="confetti dot"></div>
-        <div class="confetti heart" style="left: 85%"></div>
-        <div class="confetti dot" style="left: 15%; background: #69a7ff;"></div>
+        <div class="confetti dot" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="confetti heart" style="left: 85%; animation-delay: 4s;"></div>
+        <div class="confetti dot" style="left: 60%; background: #69a7ff; animation-delay: 1s;"></div>
     </div>
 
-    <div class="countdown-card">
+    <div id="popup-modal">
+        <div class="modal-content">
+            <h2>Hey Thangachi! 👋</h2>
+            <p>I have a little surprise for you I wish this will you happy and maybe not...</p>
+            <button class="close-popup-btn" onclick="closePopup()">See Surprise ✨</button>
+        </div>
+    </div>
+
+    <div id="scratch-stage" class="main-card">
+        <h2>Scratch to Reveal!</h2>
+
+        <div class="scratch-container">
+            <div class="scratch-prize">
+                <h3>₹50</h3>
+            </div>
+            <canvas id="scratch-canvas" width="300" height="150"></canvas>
+        </div>
+
+        <p id="congrats-msg">Congratulations you won!</p>
+
+        <button id="claim-button">CLAIM YOUR PRIZE 💖</button>
+    </div>
+
+    <div id="countdown-stage" class="main-card">
         <h1>Your Special Day is Almost Here💗</h1>
         <div class="timer-container">
-            <div class="timer-unit">
-                <span id="days">0</span>
+            <div class="timer-unit"><span id="days">0</span>
                 <p>Days</p>
-                <div class="icon">♡</div>
             </div>
-            <div class="timer-unit">
-                <span id="hours">0</span>
+            <div class="timer-unit"><span id="hours">0</span>
                 <p>Hours</p>
-                <div class="icon">🎁</div>
             </div>
-            <div class="timer-unit">
-                <span id="minutes">0</span>
+            <div class="timer-unit"><span id="minutes">0</span>
                 <p>Minutes</p>
-                <div class="icon">🎂</div>
             </div>
-            <div class="timer-unit">
-                <span id="seconds">0</span>
+            <div class="timer-unit"><span id="seconds">0</span>
                 <p>Seconds</p>
-                <div class="icon">⭐</div>
             </div>
         </div>
-        
         <div class="gift-message">
-            <p>
-                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a>
+            <p>A text copied in your clipboard, just paste it in after 15 sec 😜</p>
+            <p class="sub-text">
+                Only send this if you want to, otherwise it's not necessary.<br>
+                Tell me what happened, I will understand. 😌
             </p>
-            <div class="loading-dots"><span></span><span></span><span></span></div>
         </div>
     </div>
 
+    <input type="text" id="clipboard-text" value="Congratulation pallu you got a ₹50 voucher Just send this message to me and you get your kinder joy (yummy😋🎉) you also have the chance to say No, and after (No) your all Treat & surprises just thrown in the dustbin 😁"
+        style="position: absolute; left: -9999px; opacity: 0;">
+
     <script>
-        // --- Target Date (Dec 1st) ---
-        const targetDate = new Date("Dec 1, 2025 00:00:00");
-
-        function getCountdownTime() {
-            const now = new Date().getTime();
-            let year = new Date().getFullYear();
-            // Ensure targetDate uses current year if passed, or next year
-             let countDownDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()).getTime();
-
-            // If the date has already passed this year, set it for next year
-            if (now > countDownDate) {
-                 countDownDate = new Date(year + 1, targetDate.getMonth(), targetDate.getDate()).getTime();
-            }
-            // OVERRIDE for specific year if needed, but your original code used this logic.
-            // Since you hardcoded 2025 above, let's stick to that explicitly:
-            return new Date("Dec 1, 2025 00:00:00").getTime();
+        function closePopup() {
+            document.getElementById('popup-modal').style.display = 'none';
+            document.getElementById('scratch-stage').style.display = 'block';
+            initScratchCard();
         }
-        
-        const countDownDate = getCountdownTime();
 
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        const titleEl = document.querySelector('.countdown-card h1');
+        let isScratched = false;
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
 
-        // Update the count down every 1 second
-        const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
+            // Define the gradient for the scratch-off layer
+            let scratchGradient = ctx.createLinearGradient(0, 0, 300, 150);
+            scratchGradient.addColorStop(0, "#ffb6c1");
+            scratchGradient.addColorStop(1, "#8b5fd9");
 
-            // Time calculations
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Apply the gradient to the scratch-off layer
+            ctx.fillStyle = scratchGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Display the result
-            daysEl.innerHTML = days;
-            hoursEl.innerHTML = hours;
-            minutesEl.innerHTML = minutes;
-            secondsEl.innerHTML = seconds;
+            // Set up the text to be revealed (also using the gradient)
+            ctx.font = "bold 24px Poppins";
+            ctx.textAlign = "center";
 
-            // If the count down is finished
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                titleEl.innerHTML = "Your Special Day is Here! 🎉";
-                daysEl.innerHTML = 0;
-                hoursEl.innerHTML = 0;
-                minutesEl.innerHTML = 0;
-                secondsEl.innerHTML = 0;
+            // Create a pattern from the gradient for the text fill
+            let tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            let tempCtx = tempCanvas.getContext('2d');
+            tempCtx.fillStyle = scratchGradient;
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            ctx.fillStyle = ctx.createPattern(tempCanvas, 'no-repeat');
+
+            ctx.fillText("Scratch Here!", canvas.width / 2, canvas.height / 2 + 8);
+
+            let isDrawing = false;
+            function scratch(e) {
+                if (!isDrawing) return;
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath(); ctx.arc(x, y, 20, 0, Math.PI * 2); ctx.fill();
+                checkCompletion();
             }
+            canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('touchmove', scratch);
+            canvas.addEventListener('touchend', () => isDrawing = false);
+
+            function checkCompletion() {
+                if (isScratched) return;
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let clear = 0;
+                for (let i = 3; i < imageData.data.length; i += 4) if (imageData.data[i] === 0) clear++;
+                if ((clear / (canvas.width * canvas.height)) > 0.4) {
+                    isScratched = true;
+                    document.getElementById('claim-button').style.display = 'inline-block';
+                    document.getElementById('congrats-msg').style.display = 'block'; // Show congrats message
+                }
+            }
+        }
+
+        document.getElementById('claim-button').addEventListener('click', function () {
+            const copyText = document.getElementById("clipboard-text");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(copyText.value);
+            } else {
+                document.execCommand('copy');
+            }
+
+            document.getElementById('scratch-stage').style.display = 'none';
+            document.getElementById('countdown-stage').style.display = 'block';
+
+            const banner = document.getElementById('redirect-banner');
+            const timerSpan = document.getElementById('redirect-timer');
+            banner.style.display = 'block';
+
+            let secondsLeft = 15;
+            const interval = setInterval(() => {
+                secondsLeft--;
+                timerSpan.innerText = secondsLeft;
+                if (secondsLeft <= 0) {
+                    clearInterval(interval);
+                    window.location.href = "https://ig.me/m/vipin_singh_05";
+                }
+            }, 1000);
+        });
+
+        const targetDate = new Date("Dec 1, 2025 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance < 0) return;
+            document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
     </script>
 </body>
+
 </html>
