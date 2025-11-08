@@ -3,8 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport tag is essential for mobile responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Thangachi 😘</title>
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500;700&display=swap"
@@ -27,6 +30,7 @@
             min-height: 100vh;
             padding: 20px;
             overflow: hidden;
+            color: #333;
         }
 
         /* --- REDIRECT BANNER --- */
@@ -46,15 +50,6 @@
             animation: slideDown 0.5s ease forwards;
         }
 
-        #redirect-banner .sub-text {
-            display: block;
-            font-weight: 400;
-            font-size: 0.85em;
-            opacity: 0.95;
-            margin-top: 8px;
-            line-height: 1.4;
-        }
-
         @keyframes slideDown {
             from { transform: translateY(-100%); }
             to { transform: translateY(0); }
@@ -72,7 +67,7 @@
             text-align: center;
             position: relative;
             z-index: 10;
-            display: none;
+            display: none; /* Hidden by default */
             animation: fadeIn 0.8s ease forwards;
         }
 
@@ -96,7 +91,10 @@
             padding: 20px;
         }
 
-        #popup-modal-2 { display: none; }
+        /* Hide the second popup initially */
+        #popup-modal-2 { 
+            display: none; 
+        }
 
         .modal-content {
             background: #fff;
@@ -106,7 +104,7 @@
             width: 100%;
             text-align: center;
             border: 4px solid #fbc2d8;
-            position: relative;
+            position: relative; 
             animation: popIn 0.3s ease forwards;
         }
 
@@ -121,7 +119,14 @@
             margin-bottom: 15px;
             font-size: 1.8em;
         }
+        
+        .modal-content p {
+            font-size: 1.1em;
+            line-height: 1.5;
+            color: #555;
+        }
 
+        /* The 'X' cross only on the first popup */
         .close-icon {
             position: absolute;
             top: 10px;
@@ -145,9 +150,11 @@
             cursor: pointer;
             margin-top: 20px;
             font-size: 1.1em;
-            transition: transform 0.2s;
+            transition: transform 0.2s ease-out;
         }
-        .popup-btn:active { transform: scale(0.95); }
+        .popup-btn:active { 
+            transform: scale(0.95); /* Click effect */
+        }
 
         /* --- SCRATCH CARD CONTAINER --- */
         .scratch-container {
@@ -172,6 +179,7 @@
             overflow: hidden;
         }
 
+        /* Blurred background image */
         .scratch-prize::before {
             content: '';
             position: absolute;
@@ -179,7 +187,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('joy.jpg');
+            /* Placeholder for 'joy.jpg' */
+            background-image: url('https://placehold.co/300x150/ffb6c1/8b5fd9?text=Surprise!');
             background-size: cover;
             background-position: center;
             filter: blur(1.5px);
@@ -189,10 +198,10 @@
         .scratch-prize h3 {
             font-family: 'Nunito', sans-serif;
             font-weight: 800;
-            font-size: 2em;
+            font-size: 2.5em; /* Made text bigger */
             color: #ffffff;
             margin: 0;
-            text-shadow: 4px 4px 10px rgb(0, 0, 0);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Softer shadow */
             position: relative;
             z-index: 2;
             filter: none;
@@ -201,9 +210,9 @@
         #congrats-msg {
             display: none;
             font-weight: 600;
-            font-size: 1em;
-            color: #000000;
-            margin: 15px 0;
+            font-size: 1.1em;
+            color: #222;
+            margin: 15px 0 0 0; /* Adjusted margin */
         }
 
         #scratch-canvas {
@@ -211,7 +220,8 @@
             top: 0;
             left: 0;
             z-index: 2;
-            touch-action: none;
+            /* Prevents page scroll while scratching on mobile */
+            touch-action: none; 
         }
 
         #claim-button {
@@ -222,14 +232,16 @@
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: 700;
+            font-size: 1.1em;
             cursor: pointer;
+            margin-top: 15px;
             animation: pulseBtn 1.5s infinite;
         }
 
         @keyframes pulseBtn {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(247, 90, 152, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(247, 90, 152, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(247, 90, 152, 0); }
         }
 
         /* --- COUNTDOWN STAGE --- */
@@ -268,7 +280,7 @@
             font-size: 0.8em;
             font-weight: 500;
             color: #e02e87;
-            margin: 4px 0;
+            margin: 4px 0 0 0;
         }
 
         .gift-message {
@@ -277,6 +289,7 @@
             padding: 15px;
             margin-top: 10px;
             color: #e667a1;
+            font-weight: 500;
         }
 
         .gift-message .sub-text {
@@ -284,6 +297,7 @@
             opacity: 0.8;
             margin-top: 10px;
             line-height: 1.4;
+            font-weight: 400;
         }
 
         /* --- Confetti Animation --- */
@@ -335,10 +349,12 @@
 
 <body>
 
+    <!-- This banner is hidden until the claim button is clicked -->
     <div id="redirect-banner">
-        Wait for <span id="redirect-timer">15</span>s... 💌
+        Redirecting in <span id="redirect-timer">15</span>s... 💌
     </div>
 
+    <!-- Background confetti -->
     <div class="confetti-container">
         <div class="confetti heart"></div>
         <div class="confetti dot" style="left: 20%; animation-delay: 2s;"></div>
@@ -346,23 +362,28 @@
         <div class="confetti dot" style="left: 60%; background: #69a7ff; animation-delay: 1s;"></div>
     </div>
 
+    <!-- POPUP 1: First one shown -->
     <div id="popup-modal-1" class="popup-modal">
         <div class="modal-content">
+            <!-- The 'cross' button, only on the first popup -->
             <span class="close-icon" onclick="showSecondPopup()">×</span>
             <h2>Hey Thangachi! 👋</h2>
-            <p>I have a little surprise for you I wish this will you happy and maybe not...</p>
+            <p>I have a little surprise for you. I wish this will make you happy... maybe not 😜</p>
             <button class="popup-btn" onclick="showSecondPopup()">See Surprise ✨</button>
         </div>
     </div>
 
+    <!-- POPUP 2: Second one shown -->
     <div id="popup-modal-2" class="popup-modal">
         <div class="modal-content">
+            <!-- No cross button here, as requested -->
             <h2>Now Try your luck! 🍀</h2>
             <p>It's all in your hands now...</p>
             <button class="popup-btn" onclick="showScratchStage()">Are you ready? 🤩</button>
         </div>
     </div>
 
+    <!-- STAGE 1: SCRATCH CARD -->
     <div id="scratch-stage" class="main-card">
         <h2>Scratch to Reveal!</h2>
         <div class="scratch-container">
@@ -375,6 +396,7 @@
         <button id="claim-button">CLAIM YOUR PRIZE 💖</button>
     </div>
 
+    <!-- STAGE 2: COUNTDOWN (Shown after claiming) -->
     <div id="countdown-stage" class="main-card">
         <h1>Your Special Day is Almost Here💗</h1>
         <div class="timer-container">
@@ -393,63 +415,85 @@
     </div>
 
     <script>
+        // --- Configuration ---
         const INSTAGRAM_USERNAME = "vipin_singh_05";
         const CLIPBOARD_TEXT = "Congratulation pallu you got a ₹50 voucher Just send this message to me and you get your kinder joy (yummy😋🎉) you also have the chance to say No, and after (No) your all Treat & surprises just thrown in the dustbin 😁";
 
-        // --- POPUPS ---
+        // --- POPUP FLOW CONTROL ---
         function showSecondPopup() {
             document.getElementById('popup-modal-1').style.display = 'none';
             document.getElementById('popup-modal-2').style.display = 'flex';
         }
+
         function showScratchStage() {
             document.getElementById('popup-modal-2').style.display = 'none';
             document.getElementById('scratch-stage').style.display = 'block';
-            initScratchCard();
+            initScratchCard(); // Start the scratch card logic
         }
 
-        // --- SCRATCH LOGIC ---
+        // --- SCRATCH CARD LOGIC ---
         let isScratched = false;
         function initScratchCard() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
+            
+            // Create the gradient for the scratch-off layer
             let scratchGradient = ctx.createLinearGradient(0, 0, 300, 150);
-            scratchGradient.addColorStop(0, "#ffb6c1");
-            scratchGradient.addColorStop(1, "#8b5fd9");
+            scratchGradient.addColorStop(0, "#ffb6c1"); // Light pink
+            scratchGradient.addColorStop(1, "#8b5fd9"); // Purple
+            
             ctx.fillStyle = scratchGradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add "Scratch Here!" text on top of the gradient
             ctx.font = "bold 24px Poppins";
             ctx.textAlign = "center";
-            let tempCanvas = document.createElement('canvas');
-            tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
-            let tempCtx = tempCanvas.getContext('2d');
-            tempCtx.fillStyle = scratchGradient;
-            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-            ctx.fillStyle = ctx.createPattern(tempCanvas, 'no-repeat');
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)"; // Semi-transparent white
             ctx.fillText("Scratch Here!", canvas.width / 2, canvas.height / 2 + 8);
 
             let isDrawing = false;
+            
+            // Function to scratch
             function scratch(e) {
                 if (!isDrawing) return;
-                e.preventDefault();
+                e.preventDefault(); // Prevents page scrolling
                 const rect = canvas.getBoundingClientRect();
+                
+                // Get coordinates for both mouse and touch events
                 const x = (e.clientX || e.touches[0].clientX) - rect.left;
                 const y = (e.clientY || e.touches[0].clientY) - rect.top;
+                
+                // Erase the canvas
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 20, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); 
+                ctx.arc(x, y, 20, 0, Math.PI * 2); // 20px radius scratch circle
+                ctx.fill();
+                
                 checkCompletion();
             }
+            
+            // Event Listeners for both mouse and touch
             canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
             canvas.addEventListener('mousemove', scratch);
             canvas.addEventListener('mouseup', () => isDrawing = false);
-            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
-            canvas.addEventListener('touchmove', scratch);
+            canvas.addEventListener('mouseleave', () => isDrawing = false); // Stop if mouse leaves
+            
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, { passive: false });
+            canvas.addEventListener('touchmove', scratch, { passive: false });
             canvas.addEventListener('touchend', () => isDrawing = false);
 
+            // Check how much has been scratched
             function checkCompletion() {
-                if (isScratched) return;
+                if (isScratched) return; // Don't run again if already revealed
+                
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 let clear = 0;
-                for (let i = 3; i < imageData.data.length; i += 4) if (imageData.data[i] === 0) clear++;
+                // Check transparency (alpha channel) of pixels
+                for (let i = 3; i < imageData.data.length; i += 4) {
+                    if (imageData.data[i] === 0) clear++; // Count cleared pixels
+                }
+                
+                // If more than 40% is scratched, reveal the button
                 if ((clear / (canvas.width * canvas.height)) > 0.4) {
                     isScratched = true;
                     document.getElementById('claim-button').style.display = 'inline-block';
@@ -458,55 +502,79 @@
             }
         }
 
-        // --- COPY & REDIRECT ---
+        // --- CLIPBOARD FUNCTION ---
+        // Modern function to copy text without showing a keyboard
         async function copyToClipboard(text) {
-            try { await navigator.clipboard.writeText(text); }
-            catch (err) {
-                const ta = document.createElement("textarea");
-                ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-                ta.setAttribute('readonly', ''); document.body.appendChild(ta);
-                ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+            try {
+                // Try modern async clipboard API
+                await navigator.clipboard.writeText(text);
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed"; // Don't scroll to it
+                textArea.style.opacity = "0"; // Hide it
+                textArea.setAttribute('readonly', ''); // Prevent keyboard
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy"); // Legacy copy command
+                document.body.removeChild(textArea);
             }
         }
 
+        // --- CLAIM BUTTON CLICK & REDIRECT ---
         document.getElementById('claim-button').addEventListener('click', function () {
+            // 1. Copy text to clipboard
             copyToClipboard(CLIPBOARD_TEXT);
+            
+            // 2. Hide scratch card, show countdown
             document.getElementById('scratch-stage').style.display = 'none';
             document.getElementById('countdown-stage').style.display = 'block';
+            
+            // 3. Show redirect banner
             document.getElementById('redirect-banner').style.display = 'block';
 
             let secondsLeft = 15;
             const timerSpan = document.getElementById('redirect-timer');
+            
+            // 4. Start 15-second timer
             const interval = setInterval(() => {
                 secondsLeft--;
                 timerSpan.innerText = secondsLeft;
+                
                 if (secondsLeft <= 0) {
                     clearInterval(interval);
                     
-                    // --- UPDATED REDIRECT LOGIC ---
-                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    // --- FINAL REDIRECT LOGIC ---
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    
                     if (isMobile) {
-                        // Try to open app specifically to profile first (more reliable than direct DM links)
-                        // They can click "Message" from the profile easily.
-                        window.location.href = "instagram://user?username=" + INSTAGRAM_USERNAME;
-                        
-                        // Fallback: If app doesn't open in 1 second, open standard universal link
-                        setTimeout(function() {
-                             window.location.href = "https://ig.me/m/" + INSTAGRAM_USERNAME;
-                        }, 1000);
+                        // On Mobile: Use the deep link to force the app open
+                        window.location.href = "instagram://direct?username=" + INSTAGRAM_USERNAME;
                     } else {
+                        // On Desktop: Use the web link
                         window.location.href = "https://ig.me/m/" + INSTAGRAM_USERNAME;
                     }
                 }
             }, 1000);
         });
 
-        // --- TIMER ---
+        // --- BIRTHDAY COUNTDOWN TIMER ---
         const targetDate = new Date("Dec 1, 2025 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) return;
+            
+            // Don't run if the date has passed
+            if (distance < 0) {
+                document.getElementById('days').innerText = 0;
+                document.getElementById('hours').innerText = 0;
+                document.getElementById('minutes').innerText = 0;
+                document.getElementById('seconds').innerText = 0;
+                return;
+            }
+            
+            // Calculate time
             document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
