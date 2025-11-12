@@ -232,204 +232,6 @@
         .confetti:nth-child(14) { left: 45%; animation-delay: 2s; animation-duration: 18s; }
         .confetti:nth-child(15) { left: 55%; animation-delay: 6s; animation-duration: 11s; }
 
-
-        /* --- NEW: Modal Popup System --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            /* align-items: center; */ /* <-- REMOVED THIS */
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            overflow-y: auto; /* <-- ADDED THIS */
-            padding: 40px 10px; /* <-- ADDED THIS to give scrolling room */
-        }
-        
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* --- NEW: "Zuup" Animation --- */
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-content {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px 20px; /* <-- CHANGED THIS */
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            text-align: left;
-            font-family: 'Poppins', sans-serif;
-            margin: auto 0; /* Helps with centering in the scroll area */
-        }
-
-        .modal-overlay.show .modal-content {
-            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 2.5em;
-            color: #aaa;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            line-height: 1;
-        }
-        .close-btn:hover {
-            color: #333;
-        }
-
-        /* --- NEW: Popup Theme Styles --- */
-        .popup-body {
-            padding: 20px 10px;
-            text-align: center;
-            line-height: 1.6;
-        }
-        
-        /* Theme 1: "How's your day?" */
-        .popup-theme-1 h2 {
-            font-family: 'Pacifico', cursive;
-            color: #f75a98;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        .popup-theme-1 p {
-            font-size: 1.2em;
-            color: #555;
-        }
-
-        /* Theme 2: "Ek baat batao" */
-        .popup-theme-2 h2 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            color: #8b5fd9; /* Purple to match timer */
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
-        .popup-theme-2 p {
-            font-size: 1.1em;
-            color: #333;
-            font-style: italic;
-        }
-
-        /* Theme 3: "Request" */
-        .popup-theme-request h2 {
-            font-family: 'Story Script', sans-serif;
-            font-weight: 700;
-            color: #e02e87;
-            font-size: 2.2em;
-            margin-bottom: 5px;
-        }
-        .popup-theme-request p {
-            font-size: 1.1em;
-            color: #666;
-        }
-        
-        /* NEW: Simple content animation */
-        .popup-body > * {
-            animation: fadeInContent 0.5s ease-out 0.2s;
-            animation-fill-mode: forwards;
-            opacity: 0;
-        }
-        .popup-body > *:nth-child(2) {
-             animation-delay: 0.3s; /* Stagger animation for 2nd element */
-        }
-        
-        @keyframes fadeInContent {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-
-        /* --- NEW: Address Form Styles (Unchanged) --- */
-        .address-form h2 {
-            font-family: 'Pacifico', cursive;
-            color: #f75a98;
-            text-align: center;
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-        .address-form p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 0.9em;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #e02e87;
-            font-size: 0.9em;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-family: 'Poppins', sans-serif;
-            box-sizing: border-box; /* Important for padding */
-        }
-        .form-group input:focus {
-             border-color: #f75a98;
-             box-shadow: 0 0 5px rgba(247, 90, 152, 0.5);
-             outline: none;
-        }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .form-row .form-group {
-            flex: 1;
-            min-width: 150px;
-        }
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #f75a98;
-            color: white;
-            font-weight: 700;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            margin-top: 20px;
-        }
-        .submit-btn:hover {
-            background: #e02e87;
-            transform: translateY(-2px);
-        }
-
     </style>
 </head>
 <body>
@@ -439,8 +241,6 @@
         <div class="confetti dot"></div>
         <div class="confetti heart" style="left: 85%"></div>
         <div class="confetti dot" style="left: 15%; background: #69a7ff;"></div>
-        <div class="confetti heart" style="left: 65%; animation-delay: 3s;"></div>
-        <div class="confetti dot" style="left: 75%; animation-delay: 1s; background: #90ee90;"></div>
     </div>
 
     <div class="countdown-card">
@@ -449,7 +249,7 @@
             <div class="timer-unit">
                 <span id="days">0</span>
                 <p>Days</p>
-                <div classi="icon">♡</div>
+                <div class="icon">♡</div>
             </div>
             <div class="timer-unit">
                 <span id="hours">0</span>
@@ -476,19 +276,21 @@
         </div>
     </div>
 
-    <div id="popup-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <div id="modal-body">
-                </div>
-        </div>
-    </div>
-
     <script>
         // --- Target Date (Dec 1st) ---
         const targetDate = new Date("Dec 1, 2025 00:00:00");
 
         function getCountdownTime() {
+            const now = new Date().getTime();
+            let year = new Date().getFullYear();
+            // Ensure targetDate uses current year if passed, or next year
+             let countDownDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()).getTime();
+
+            // If the date has already passed this year, set it for next year
+            if (now > countDownDate) {
+                 countDownDate = new Date(year + 1, targetDate.getMonth(), targetDate.getDate()).getTime();
+            }
+            // OVERRIDE for specific year if needed, but your original code used this logic.
             // Since you hardcoded 2025 above, let's stick to that explicitly:
             return new Date("Dec 1, 2025 00:00:00").getTime();
         }
@@ -528,162 +330,7 @@
                 secondsEl.innerHTML = 0;
             }
         }, 1000);
-
-
-        // --- NEW: Modal Popup Logic ---
-
-        const modal = document.getElementById('popup-modal');
-        const modalBody = document.getElementById('modal-body');
-        const closeBtn = document.querySelector('.close-btn');
-
-        // --- NEW: Themed HTML Content for Popups ---
-        const popupContent = [
-            // Popup 1 (Original 2nd)
-            `<div class="popup-body popup-theme-2">
-                <h2>Ek chhota sa request hai...</h2>
-                <p>(...I have one small request...)</p>
-            </div>`,
-            
-            // Popup 2 (Original 3rd)
-            `<div class="popup-body popup-theme-request">
-                <h2>I know I do silly things...</h2>
-                <p>...things that you don't like. Maybe this is one of them...</p>
-            </div>`,
-            
-            // Popup 3 (Original 4th)
-            `<div class="popup-body popup-theme-request">
-                <h2>Plz don't refuse this! 🙏</h2>
-                <p>I'm sorry for all my mistakes... litteraly I touch your foot and say sorry!</p>
-            </div>`,
-            
-            // Popup 4 (Original 5th)
-            `<div class="popup-body popup-theme-request">
-                <h2>I promise!</h2>
-                <p>Next time I won't make this all request... but *now* plz... just this once!</p>
-            </div>`,
-            
-            // Popup 5 (NEW ONE)
-            `<div class="popup-body popup-theme-request">
-                <h2>I know you refuse this all...</h2>
-                <p>...and say "don't do this" (icecream, kinder joy, gifts, all this coding 😅) but plzz don't refuse this!</p>
-            </div>`,
-
-
-            // Popup 7 (Original 7th)
-            `<div class="popup-body popup-theme-request">
-                <h2>Okay okay, almost done...</h2>
-                <p>(...are you annoyed yet? 😅)</p>
-            </div>`,
-            
-            // Popup 8 (Original 8th)
-            `<div class="popup-body popup-theme-request">
-                <h2>Okay, this is the last thing...</h2>
-                <p>...because I don't want to do what you don't like.</p>
-            </div>`
-            
-            // Original 9th popup was REMOVED as requested
-        ];
-        
-        // --- FormSubmit.co Setup ---
-        // 1. CHANGE "YOUR-EMAIL-HERE" to your actual email address.
-        const formActionURL = "https://formsubmit.co/techstock05@gmail.com";
-        
-        // 2. (Optional) Create a "Thank You" page on your site and put the URL here.
-        const formRedirectURL = ""; // e.g., "https://my-site.com/thanks.html"
-
-        // The 10th item: The Address Form (Now the 9th popup)
-        const addressFormHTML = `
-            <form action="${formActionURL}" method="POST" class="address-form">
-                <h2>One Last Thing... 🎁</h2>
-                <p>To make sure your gift finds you! (Shhh, it's a secret 🤫)</p>
-                
-                <div class="form-row">
-                    <div class="form-group" style="flex: 2;">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group" style="flex: 3;">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">Address (Street)</label>
-                    <input type="text" id="address" name="address" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="apartment">Apartment, suite, etc. (Optional)</label>
-                    <input type="text" id="apartment" name="apartment">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" style="flex: 2;">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" required>
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label for="state">State</label>
-                        <input type="text" id="state" name="state" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pin-code">PIN Code</label>
-                        <input type="text" id="pin-code" name="pin-code" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <input type="text" id="country" name="country" value="India" required>
-                    </div>
-                </div>
-
-                ${formRedirectURL ? `<input type="hidden" name="_next" value="${formRedirectURL}">` : ''}
-                <input type="hidden" name="_subject" value="Secret Gift - Address Submission!">
-                <input type="hidden" name="_captcha" value="false">
-
-                <button type="submit" class="submit-btn">Send My Info!</button>
-            </form>
-        `;
-
-        let currentPopupIndex = 0;
-
-        function showPopup(index) {
-            if (index < popupContent.length) { // Use new content array
-                // It's a text popup
-                modalBody.innerHTML = popupContent[index]; // Use new content array
-            } else {
-                // It's time for the form
-                modalBody.innerHTML = addressFormHTML;
-            }
-            modal.classList.add('show');
-        }
-
-        function closeModal() {
-            modal.classList.remove('show');
-            
-            // Move to the next popup
-            currentPopupIndex++;
-            
-            if (currentPopupIndex <= popupContent.length) { // <= to include the form
-                // Show the next popup after the "close" animation finishes
-                setTimeout(() => {
-                    showPopup(currentPopupIndex);
-                }, 400); // 400ms delay
-            }
-        }
-
-        // --- Event Listeners ---
-        closeBtn.addEventListener('click', closeModal);
-
-        // --- INITIATE THE POPUPS ---
-        // NEW: Show the first popup immediately on page load
-        window.addEventListener('load', () => {
-            showPopup(currentPopupIndex);
-        });
-
     </script>
 </body>
 </html>
+
