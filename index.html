@@ -26,6 +26,82 @@
             overflow: hidden;
         }
 
+        /* --- NEW: Blur Class --- */
+        .blurred {
+            filter: blur(8px);
+            transition: filter 1.5s ease;
+        }
+
+        /* --- NEW: Text Overlay --- */
+        #text-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            opacity: 1; 
+            transition: opacity 1.5s ease-in-out;
+            pointer-events: auto;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- UPDATED: H1 Styling --- */
+        #text-overlay h1 {
+            
+            font-weight: 700;
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            text-align: center;
+            line-height: 1.2;
+           
+            
+            color:#e02e87;
+
+            text-shadow: 2px 2px 6px rgba(230, 216, 32, 0.623);
+            opacity: 0; /* Hidden initially */
+            transform: translateY(-20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        
+        #text-overlay h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* UPDATED: Click prompt styling */
+#start-prompt {
+    /* --- ADD THESE 3 LINES FOR CENTERING --- */
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+
+    /* --- Your existing styles --- */
+    color: #e02e87;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+   
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: pulse-prompt 1.5s infinite ease-in-out;
+    transition: opacity 0.3s ease, display 0.3s ease;
+}
+        @keyframes pulse-prompt {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
         /* --- Main Card --- */
         .countdown-card {
             background: #ffffff;
@@ -236,14 +312,30 @@
 </head>
 <body>
 
-    <div class="confetti-container">
+    <div id="text-overlay">
+        <div id="start-prompt">Ready?</div>
+        <h1>
+            Happy<br> childrens <br> day <br> my baccha
+        </h1>
+    </div>
+
+    <audio id="overlay-audio" src="baccha.mp3" preload="auto"></audio>
+
+
+    <div class="confetti-container blurred">
         <div class="confetti heart"></div>
         <div class="confetti dot"></div>
         <div class="confetti heart" style="left: 85%"></div>
         <div class="confetti dot" style="left: 15%; background: #69a7ff;"></div>
+        <div class="confetti heart" style="left: 25%"></div>
+        <div class="confetti dot" style="left: 35%; background: #f7a04b;"></div>
+        <div class="confetti heart" style="left: 45%"></div>
+        <div class="confetti dot" style="left: 55%; background: #90ee90;"></div>
+        <div class="confetti heart" style="left: 65%"></div>
+        <div class="confetti dot" style="left: 75%; background: #69a7ff;"></div>
     </div>
 
-    <div class="countdown-card">
+    <div class="countdown-card blurred">
         <h1>Your Special Day is Almost Here💗</h1>
         <div class="timer-container">
             <div class="timer-unit">
@@ -270,67 +362,115 @@
         
         <div class="gift-message">
             <p>
-                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">Tell me about your day</a>
+                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">cute voice me song ho jaye 😁</a>
             </p>
             <div class="loading-dots"><span></span><span></span><span></span></div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
     <script>
-        // --- Target Date (Dec 1st) ---
-        const targetDate = new Date("Dec 1, 2025 00:00:00");
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get Elements ---
+            const textOverlay = document.getElementById('text-overlay');
+            const overlayAudio = document.getElementById('overlay-audio');
+            const mainCard = document.querySelector('.countdown-card');
+            const bgConfetti = document.querySelector('.confetti-container');
+            const startPrompt = document.getElementById('start-prompt');
+            const overlayH1 = document.querySelector('#text-overlay h1');
+            
+            const overlayDuration = 10000; // 10 seconds
 
-        function getCountdownTime() {
-            const now = new Date().getTime();
-            let year = new Date().getFullYear();
-            // Ensure targetDate uses current year if passed, or next year
-             let countDownDate = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()).getTime();
+            // --- 1. Start the countdown timer immediately (it will be blurry) ---
+            startCountdown();
 
-            // If the date has already passed this year, set it for next year
-            if (now > countDownDate) {
-                 countDownDate = new Date(year + 1, targetDate.getMonth(), targetDate.getDate()).getTime();
+            // --- 2. NEW: Wait for user click to start everything ---
+            textOverlay.addEventListener('click', () => {
+                
+                // --- UPDATED: Play audio FIRST for immediate response ---
+                overlayAudio.play().catch(error => {
+                    console.warn("Audio play failed, but click was registered.", error);
+                });
+
+                // --- UPDATED: Hide prompt INSTANTLY, show text ---
+                startPrompt.style.display = 'none';
+                overlayH1.classList.add('visible');
+                
+                // --- Make overlay unclickable after first click ---
+                textOverlay.style.pointerEvents = 'none';
+
+                // --- Start party confetti ---
+                const confettiEndTime = Date.now() + overlayDuration;
+                const confettiInterval = setInterval(() => {
+                    if (Date.now() > confettiEndTime) {
+                        return clearInterval(confettiInterval);
+                    }
+                    
+                    confetti({
+                        particleCount: 100,
+                        startVelocity: 30,
+                        spread: 360,
+                        origin: { x: Math.random(), y: Math.random() - 0.2 }
+                    });
+                }, 300);
+
+                // --- 3. Set timer to remove overlay and unblur content ---
+                setTimeout(() => {
+                    // Fade out text
+                    textOverlay.style.opacity = '0';
+                    
+                    // --- UPDATED: Audio lines are REMOVED ---
+                    // The song will continue to play until it finishes.
+                    
+                    // Remove blur
+                    mainCard.classList.remove('blurred');
+                    bgConfetti.classList.remove('blurred');
+
+                    // Hide text overlay completely after fade out
+                    setTimeout(() => {
+                        textOverlay.style.display = 'none';
+                    }, 1500); // Match CSS transition time
+
+                }, overlayDuration); // 10-second overlay
+
+            }, { once: true }); // {once: true} ensures this only runs one time
+
+
+            // --- Original Countdown Function ---
+            function startCountdown() {
+                const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
+                const daysEl = document.getElementById('days');
+                const hoursEl = document.getElementById('hours');
+                const minutesEl = document.getElementById('minutes');
+                const secondsEl = document.getElementById('seconds');
+                const titleEl = document.querySelector('.countdown-card h1');
+
+                const countdownInterval = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = countDownDate - now;
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    daysEl.innerHTML = days;
+                    hoursEl.innerHTML = hours;
+                    minutesEl.innerHTML = minutes;
+                    secondsEl.innerHTML = seconds;
+
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        titleEl.innerHTML = "Your Special Day is Here! 🎉";
+                        daysEl.innerHTML = 0;
+                        hoursEl.innerHTML = 0;
+                        minutesEl.innerHTML = 0;
+                        secondsEl.innerHTML = 0;
+                    }
+                }, 1000);
             }
-            // OVERRIDE for specific year if needed, but your original code used this logic.
-            // Since you hardcoded 2025 above, let's stick to that explicitly:
-            return new Date("Dec 1, 2025 00:00:00").getTime();
-        }
-        
-        const countDownDate = getCountdownTime();
-
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        const titleEl = document.querySelector('.countdown-card h1');
-
-        // Update the count down every 1 second
-        const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-
-            // Time calculations
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result
-            daysEl.innerHTML = days;
-            hoursEl.innerHTML = hours;
-            minutesEl.innerHTML = minutes;
-            secondsEl.innerHTML = seconds;
-
-            // If the count down is finished
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                titleEl.innerHTML = "Your Special Day is Here! 🎉";
-                daysEl.innerHTML = 0;
-                hoursEl.innerHTML = 0;
-                minutesEl.innerHTML = 0;
-                secondsEl.innerHTML = 0;
-            }
-        }, 1000);
+        });
     </script>
 </body>
 </html>
-
