@@ -53,7 +53,7 @@
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 25px; /* Added margin to separate from button */
         }
 
         .timer-unit {
@@ -98,6 +98,41 @@
         .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
         .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
 
+        /* --- RESTORED: Gift Message Box & Button --- */
+        .gift-message {
+            background: #fff7fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .email-link {
+            display: inline-block;
+            background: #f75a993e;
+            color: #e02e87;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
+            animation: glow 1.5s infinite alternate;
+            font-size: 0.9em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+    
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
+            }
+            to {
+                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -125,6 +160,10 @@
                 <p>Seconds</p>
                 <div class="icon">⭐</div>
             </div>
+        </div>
+
+        <div class="gift-message">
+            <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">cute voice me song ho jaye 😁</a>
         </div>
     </div>
 
