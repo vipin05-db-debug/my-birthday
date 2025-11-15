@@ -23,86 +23,8 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow: hidden;
         }
 
-        /* --- NEW: Blur Class --- */
-        .blurred {
-            filter: blur(8px);
-            transition: filter 1.5s ease;
-        }
-
-        /* --- NEW: Text Overlay --- */
-        #text-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9998;
-            padding-bottom: 15vh; /* Pushes content up */
-            opacity: 1; 
-            transition: opacity 1.5s ease-in-out;
-            pointer-events: auto;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* --- UPDATED: H1 Styling --- */
-        #text-overlay h1 {
-            
-            font-weight: 700;
-            font-size: clamp(3.5rem, 10vw, 6rem); 
-            text-align: center;
-            line-height: 1.2;
-           
-            
-            color:#e02e87;
-
-            text-shadow: 2px 2px 6px rgba(230, 216, 32, 0.623);
-            opacity: 0; /* Hidden initially */
-            transform: translateY(-20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        
-        #text-overlay h1.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* UPDATED: Click prompt styling */
-#start-prompt {
-    /* --- ADD THESE 3 LINES FOR CENTERING --- */
-    position: absolute;
-    top: 40%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-
-    /* --- Your existing styles --- */
-    color: #e02e87;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 500;
-   
-    padding: 15px 25px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    animation: pulse-prompt 1.5s infinite ease-in-out;
-    transition: opacity 0.3s ease, display 0.3s ease;
-}
-        @keyframes pulse-prompt {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
         /* --- Main Card --- */
         .countdown-card {
             background: #ffffff;
@@ -131,7 +53,7 @@
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .timer-unit {
@@ -176,167 +98,11 @@
         .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
         .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
 
-        /* --- Gift Message Box --- */
-        .gift-message {
-            background: #fff7fa;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .gift-message p {
-            color: #e667a1;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-        }
-
-        /* --- The "Button" Link Styles --- */
-        .email-link {
-            display: inline-block;
-            background: #f75a993e;
-            color: #e02e87;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
-            animation: glow 1.5s infinite alternate;
-            font-size: 0.9em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-    
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            }
-            to {
-                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
-            }
-        }
-
-        /* --- Loading Dots Animation (kept for decoration if needed) --- */
-        .loading-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .loading-dots span {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #fbc2d8;
-            animation: pulse 1.4s infinite ease-in-out;
-        }
-        .loading-dots span:nth-child(2) {
-            background: #f75a98;
-            animation-delay: 0.2s;
-        }
-        .loading-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes pulse {
-            0%, 80%, 100% { transform: scale(0.8); opacity: 0.8; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-
-        /* --- Animated Confetti Background --- */
-        .confetti-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .confetti {
-            position: absolute;
-            bottom: -20px;
-            border-radius: 50%;
-            opacity: 0.7;
-            animation: floatUp 15s infinite linear;
-        }
-        .confetti.dot {
-            width: 10px;
-            height: 10px;
-            background: #ffd700; 
-        }
-        .confetti.heart {
-            width: 12px;
-            height: 12px;
-            background: #ff7bac;
-            transform: rotate(-45deg);
-        }
-        .confetti.heart::before,
-        .confetti.heart::after {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #ff7bac;
-            border-radius: 50%;
-        }
-        .confetti.heart::before { top: -6px; left: 0; }
-        .confetti.heart::after { top: 0; left: -6px; }
-
-        @keyframes floatUp {
-            from { bottom: -20px; transform: rotate(0deg); }
-            to { bottom: 105vh; transform: rotate(360deg); }
-        }
-
-        /* --- 15 Animation Variations for Confetti --- */
-        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
-        .confetti:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 15s; background: #90ee90; }
-        .confetti:nth-child(3) { left: 30%; animation-delay: 5s; animation-duration: 10s; }
-        .confetti:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 18s; }
-        .confetti:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 14s; background: #add8e6; }
-        .confetti:nth-child(6) { left: 60%; animation-delay: 6s; animation-duration: 12s; }
-        .confetti:nth-child(7) { left: 70%; animation-delay: 4s; animation-duration: 17s; }
-        .confetti:nth-child(8) { left: 80%; animation-delay: 7s; animation-duration: 11s; background: #ffd700; }
-        .confetti:nth-child(9) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; }
-        .confetti:nth-child(10) { left: 5%; animation-delay: 8s; animation-duration: 13s; }
-        .confetti:nth-child(11) { left: 15%; animation-delay: 1s; animation-duration: 16s; background: #f7a04b; }
-        .confetti:nth-child(12) { left: 25%; animation-delay: 3s; animation-duration: 10s; }
-        .confetti:nth-child(13) { left: 35%; animation-delay: 5s; animation-duration: 15s; background: #90ee90; }
-        .confetti:nth-child(14) { left: 45%; animation-delay: 2s; animation-duration: 18s; }
-        .confetti:nth-child(15) { left: 55%; animation-delay: 6s; animation-duration: 11s; }
-
     </style>
 </head>
 <body>
 
-    <div id="text-overlay">
-        <div id="start-prompt">Ready?</div>
-        <h1>
-            Happy<br> childrens <br> day <br> my baccha
-        </h1>
-    </div>
-
-    <audio id="overlay-audio" src="baccha.mp3" preload="auto"></audio>
-
-
-    <div class="confetti-container blurred">
-        <div class="confetti heart"></div>
-        <div class="confetti dot"></div>
-        <div class="confetti heart" style="left: 85%"></div>
-        <div class="confetti dot" style="left: 15%; background: #69a7ff;"></div>
-        <div class="confetti heart" style="left: 25%"></div>
-        <div class="confetti dot" style="left: 35%; background: #f7a04b;"></div>
-        <div class="confetti heart" style="left: 45%"></div>
-        <div class="confetti dot" style="left: 55%; background: #90ee90;"></div>
-        <div class="confetti heart" style="left: 65%"></div>
-        <div class="confetti dot" style="left: 75%; background: #69a7ff;"></div>
-    </div>
-
-    <div class="countdown-card blurred">
+    <div class="countdown-card">
         <h1>Your Special Day is Almost Here💗</h1>
         <div class="timer-container">
             <div class="timer-unit">
@@ -360,85 +126,11 @@
                 <div class="icon">⭐</div>
             </div>
         </div>
-        
-        <div class="gift-message">
-            <p>
-                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">cute voice me song ho jaye 😁</a>
-            </p>
-            <div class="loading-dots"><span></span><span></span><span></span></div>
-        </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Get Elements ---
-            const textOverlay = document.getElementById('text-overlay');
-            const overlayAudio = document.getElementById('overlay-audio');
-            const mainCard = document.querySelector('.countdown-card');
-            const bgConfetti = document.querySelector('.confetti-container');
-            const startPrompt = document.getElementById('start-prompt');
-            const overlayH1 = document.querySelector('#text-overlay h1');
-            
-            const overlayDuration = 10000; // 10 seconds
-
-            // --- 1. Start the countdown timer immediately (it will be blurry) ---
-            startCountdown();
-
-            // --- 2. NEW: Wait for user click to start everything ---
-            textOverlay.addEventListener('click', () => {
-                
-                // --- UPDATED: Play audio FIRST for immediate response ---
-                overlayAudio.play().catch(error => {
-                    console.warn("Audio play failed, but click was registered.", error);
-                });
-
-                // --- UPDATED: Hide prompt INSTANTLY, show text ---
-                startPrompt.style.display = 'none';
-                overlayH1.classList.add('visible');
-                
-                // --- Make overlay unclickable after first click ---
-                textOverlay.style.pointerEvents = 'none';
-
-                // --- Start party confetti ---
-                const confettiEndTime = Date.now() + overlayDuration;
-                const confettiInterval = setInterval(() => {
-                    if (Date.now() > confettiEndTime) {
-                        return clearInterval(confettiInterval);
-                    }
-                    
-                    confetti({
-                        particleCount: 100,
-                        startVelocity: 30,
-                        spread: 360,
-                        origin: { x: Math.random(), y: Math.random() - 0.2 }
-                    });
-                }, 300);
-
-                // --- 3. Set timer to remove overlay and unblur content ---
-                setTimeout(() => {
-                    // Fade out text
-                    textOverlay.style.opacity = '0';
-                    
-                    // --- UPDATED: Audio lines are REMOVED ---
-                    // The song will continue to play until it finishes.
-                    
-                    // Remove blur
-                    mainCard.classList.remove('blurred');
-                    bgConfetti.classList.remove('blurred');
-
-                    // Hide text overlay completely after fade out
-                    setTimeout(() => {
-                        textOverlay.style.display = 'none';
-                    }, 1500); // Match CSS transition time
-
-                }, overlayDuration); // 10-second overlay
-
-            }, { once: true }); // {once: true} ensures this only runs one time
-
-
-            // --- Original Countdown Function ---
+            // --- Countdown Function ---
             function startCountdown() {
                 const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
                 const daysEl = document.getElementById('days');
@@ -471,9 +163,9 @@
                     }
                 }, 1000);
             }
+
+            startCountdown();
         });
     </script>
 </body>
 </html>
-
-
