@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Global Styles & Background --- */
+        /* --- Global Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -18,14 +18,133 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(180deg, #fff5f8 0%, #ffffff 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- START SCREEN (To force audio play) --- */
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        #start-btn {
+            padding: 15px 40px;
+            font-size: 1.5em;
+            background: #f75a98;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Pacifico', cursive;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(247, 90, 152, 0.5);
+            animation: pulse-btn 2s infinite;
+        }
+
+        @keyframes pulse-btn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- INTRO OVERLAY --- */
+        #intro-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2); 
+            transition: opacity 1s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #intro-layer.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .intro-text-top {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.6em;
+            color: #fff;
+            text-shadow: 0 0 10px #f75a98, 0 0 20px #f75a98;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .intro-image-box {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            box-shadow: 0 0 30px rgba(247, 90, 152, 0.8);
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+
+        .intro-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- TRANSITION TEXT LAYER --- */
+        #text-layer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .middle-text {
+            font-family: 'Story Script', cursive;
+            font-size: 3.5em;
+            color: #ff2e88;
+            text-shadow: 2px 2px 0 #fff, 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        /* --- MAIN CONTENT --- */
+        #main-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            filter: blur(12px); 
+            transform: scale(0.95);
+            transition: filter 1.5s ease, transform 1.5s ease;
         }
 
-        /* --- Main Card --- */
+        #main-wrapper.clear-view {
+            filter: blur(0);
+            transform: scale(1);
+        }
+
+        /* --- COUNTDOWN CARD --- */
         .countdown-card {
             background: #ffffff;
             border-radius: 24px;
@@ -35,25 +154,20 @@
             width: 100%;
             max-width: 450px;
             text-align: center;
-            position: relative;
-            z-index: 10;
         }
 
-        /* --- Header Title --- */
         .countdown-card h1 {
             font-family: 'Pacifico', cursive;
             color: #f75a98;
             font-size: 1.6em;
-            font-weight: 400;
             margin-bottom: 25px;
         }
 
-        /* --- Timer Box Container --- */
         .timer-container {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 25px; /* Added margin to separate from button */
+            margin-bottom: 25px;
         }
 
         .timer-unit {
@@ -63,47 +177,41 @@
             width: 80px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             border: 1px solid #f9f9f9;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .timer-unit:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(247, 90, 152, 0.15);
-        }
-
-        /* --- Timer Numbers --- */
         .timer-unit span {
             display: block;
             font-family: "Story Script", sans-serif;
             font-size: 2em;
             font-weight: 700;
             color: #8b5fd9;
-            line-height: 1.1;
         }
 
-        /* --- Timer Labels --- */
         .timer-unit p {
             font-size: 0.8em;
             font-weight: 500;
             color: #e02e87;
-            margin: 4px 0;
         }
 
-        /* --- Icons --- */
-        .timer-unit .icon {
-            font-size: 1.2em;
-        }
-        .timer-unit:nth-child(1) .icon { color: #ff7bac; } /* Heart */
-        .timer-unit:nth-child(2) .icon { color: #69a7ff; } /* Gift */
-        .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
-        .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
+        .timer-unit .icon { font-size: 1.2em; }
+        .timer-unit:nth-child(1) .icon { color: #ff7bac; }
+        .timer-unit:nth-child(2) .icon { color: #69a7ff; }
+        .timer-unit:nth-child(3) .icon { color: #f7a04b; }
+        .timer-unit:nth-child(4) .icon { color: #ffd700; }
 
-        /* --- RESTORED: Gift Message Box & Button --- */
         .gift-message {
             background: #fff7fa;
             border-radius: 12px;
             padding: 15px;
             margin-top: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        .gift-message.show-button {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .email-link {
@@ -116,60 +224,146 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
             box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            text-shadow: 0 0 4px rgba(247, 90, 152, 0.6);
-            animation: glow 1.5s infinite alternate;
-            font-size: 0.9em;
-            cursor: pointer;
             text-decoration: none;
-            transition: background 0.3s ease;
+            animation: glow 1.5s infinite alternate;
         }
-    
+
         @keyframes glow {
-            from {
-                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            }
-            to {
-                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
-            }
+            from { box-shadow: 0 0 8px rgba(247, 90, 152, 0.6); }
+            to { box-shadow: 0 0 16px rgba(247, 90, 152, 1); }
         }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(247, 90, 152, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(247, 90, 152, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 90, 152, 0); }
+        }
+        .hidden { display: none !important; }
 
     </style>
 </head>
 <body>
 
-    <div class="countdown-card">
-        <h1>Your Special Day is Almost Here💗</h1>
-        <div class="timer-container">
-            <div class="timer-unit">
-                <span id="days">0</span>
-                <p>Days</p>
-                <div class="icon">♡</div>
-            </div>
-            <div class="timer-unit">
-                <span id="hours">0</span>
-                <p>Hours</p>
-                <div class="icon">🎁</div>
-            </div>
-            <div class="timer-unit">
-                <span id="minutes">0</span>
-                <p>Minutes</p>
-                <div class="icon">🎂</div>
-            </div>
-            <div class="timer-unit">
-                <span id="seconds">0</span>
-                <p>Seconds</p>
-                <div class="icon">⭐</div>
-            </div>
-        </div>
+    <audio id="bg-music" loop>
+        <source src="khushi.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-        <div class="gift-message">
-            <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">cute voice me song ho jaye 😁</a>
+    <div id="start-screen">
+        <button id="start-btn">Tap to Open 🎁</button>
+    </div>
+
+    <div id="intro-layer">
+        <div class="intro-text-top">Hey my Princess 👑</div>
+        <div class="intro-image-box">
+            <img src="pallu.jpg" alt="Princess">
+        </div>
+    </div>
+
+    <div id="text-layer">
+        <div class="middle-text">You forget this baccha? 🥺</div>
+    </div>
+
+    <div id="main-wrapper">
+        <div class="countdown-card">
+            <h1>Your Special Day is Almost Here💗</h1>
+            <div class="timer-container">
+                <div class="timer-unit">
+                    <span id="days">0</span>
+                    <p>Days</p>
+                    <div class="icon">♡</div>
+                </div>
+                <div class="timer-unit">
+                    <span id="hours">0</span>
+                    <p>Hours</p>
+                    <div class="icon">🎁</div>
+                </div>
+                <div class="timer-unit">
+                    <span id="minutes">0</span>
+                    <p>Minutes</p>
+                    <div class="icon">🎂</div>
+                </div>
+                <div class="timer-unit">
+                    <span id="seconds">0</span>
+                    <p>Seconds</p>
+                    <div class="icon">⭐</div>
+                </div>
+            </div>
+
+            <div class="gift-message" id="gift-box">
+                <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">cute voice me song gaao na yarr 😁</a>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Countdown Function ---
+            
+            const startScreen = document.getElementById('start-screen');
+            const startBtn = document.getElementById('start-btn');
+            const introLayer = document.getElementById('intro-layer');
+            const textLayer = document.getElementById('text-layer');
+            const mainWrapper = document.getElementById('main-wrapper');
+            const audio = document.getElementById('bg-music');
+            const giftBox = document.getElementById('gift-box');
+
+            // --- CLICK TO START SEQUENCE ---
+            startBtn.addEventListener('click', () => {
+                // 1. Play Audio IMMEDIATELY
+                audio.play().catch(error => {
+                    console.log("Audio play failed:", error);
+                });
+
+                // 2. Hide Start Screen
+                startScreen.style.opacity = '0';
+                setTimeout(() => startScreen.classList.add('hidden'), 500);
+
+                // 3. Show Intro Layer immediately
+                introLayer.classList.add('active');
+
+                // 4. Start the Timeline Sequence
+                runSequence();
+            });
+
+            function runSequence() {
+                // STEP 1: 10 SECONDS (Intro Visible, Music Playing)
+                setTimeout(() => {
+                    // Fade out Intro Layer (Image + Hey Princess)
+                    introLayer.style.opacity = '0';
+                    setTimeout(() => introLayer.classList.add('hidden'), 1000);
+
+                    // Show "Forget baccha?" Text
+                    textLayer.style.opacity = '1';
+                    
+                    // NOTE: We do NOT stop the music here anymore.
+                    
+                }, 10000); // 10 Seconds
+
+                // STEP 2: 13 SECONDS (Text Hidden, Main Content Shown)
+                setTimeout(() => {
+                    // Stop the song NOW (at 13 seconds total)
+                    audio.pause(); 
+                    audio.currentTime = 0; 
+
+                    // Fade out text
+                    textLayer.style.opacity = '0';
+                    setTimeout(() => textLayer.classList.add('hidden'), 500);
+
+                    // Remove Blur from Main Background
+                    mainWrapper.classList.add('clear-view');
+
+                    // Show the gift button
+                    setTimeout(() => {
+                        giftBox.classList.add('show-button');
+                    }, 1000);
+
+                }, 13000); // 13 Seconds total (10s intro + 3s text)
+            }
+
+            // --- COUNTDOWN LOGIC ---
             function startCountdown() {
                 const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
                 const daysEl = document.getElementById('days');
@@ -195,14 +389,10 @@
                     if (distance < 0) {
                         clearInterval(countdownInterval);
                         titleEl.innerHTML = "Your Special Day is Here! 🎉";
-                        daysEl.innerHTML = 0;
-                        hoursEl.innerHTML = 0;
-                        minutesEl.innerHTML = 0;
-                        secondsEl.innerHTML = 0;
+                        daysEl.innerHTML = 0; hoursEl.innerHTML = 0; minutesEl.innerHTML = 0; secondsEl.innerHTML = 0;
                     }
                 }, 1000);
             }
-
             startCountdown();
         });
     </script>
