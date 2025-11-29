@@ -6,14 +6,11 @@
     <title>My Thangachi 😘</title>
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@700&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* --- Global Styles & Background --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -23,6 +20,64 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
+            transition: all 0.5s ease; /* Smooth transitions */
+        }
+
+        /* --- THE DISSOLVE / CRACK ANIMATION --- */
+        .page-dissolve {
+            animation: crackAndDissolve 2s forwards;
+            pointer-events: none; /* Stop user from clicking anything else */
+        }
+
+        @keyframes crackAndDissolve {
+            0% {
+                transform: scale(1) rotate(0deg);
+                filter: none;
+            }
+            20% {
+                transform: scale(0.98) translate(-5px, 5px) rotate(-2deg);
+                filter: contrast(200%) hue-rotate(90deg); /* Color glitch */
+            }
+            40% {
+                transform: scale(1.02) translate(5px, -5px) rotate(2deg);
+                filter: grayscale(100%) blur(2px); /* Turning grey/cracked */
+            }
+            100% {
+                transform: scale(0) rotate(20deg); /* Shrink to nothing */
+                opacity: 0;
+                filter: blur(20px) grayscale(100%);
+            }
+        }
+
+        /* --- Birthday Overlay (The 5-Second Splash Screen) --- */
+        #birthday-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.5s ease 4.5s forwards; 
+        }
+
+        #birthday-overlay h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5em;
+            color: #f75a98;
+            text-align: center;
+            text-shadow: 2px 2px 0px #ffd1dc;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* --- Main Card --- */
@@ -39,7 +94,6 @@
             z-index: 10;
         }
 
-        /* --- Header Title --- */
         .countdown-card h1 {
             font-family: 'Pacifico', cursive;
             color: #f75a98;
@@ -48,12 +102,12 @@
             margin-bottom: 25px;
         }
 
-        /* --- Timer Box Container --- */
+        /* --- Timer Styles --- */
         .timer-container {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 25px; /* Added margin to separate from button */
+            margin-bottom: 25px; 
         }
 
         .timer-unit {
@@ -63,15 +117,9 @@
             width: 80px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             border: 1px solid #f9f9f9;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .timer-unit:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(247, 90, 152, 0.15);
-        }
-
-        /* --- Timer Numbers --- */
         .timer-unit span {
             display: block;
             font-family: "Story Script", sans-serif;
@@ -81,7 +129,6 @@
             line-height: 1.1;
         }
 
-        /* --- Timer Labels --- */
         .timer-unit p {
             font-size: 0.8em;
             font-weight: 500;
@@ -89,16 +136,12 @@
             margin: 4px 0;
         }
 
-        /* --- Icons --- */
-        .timer-unit .icon {
-            font-size: 1.2em;
-        }
-        .timer-unit:nth-child(1) .icon { color: #ff7bac; } /* Heart */
-        .timer-unit:nth-child(2) .icon { color: #69a7ff; } /* Gift */
-        .timer-unit:nth-child(3) .icon { color: #f7a04b; } /* Cake */
-        .timer-unit:nth-child(4) .icon { color: #ffd700; } /* Star */
+        .timer-unit:nth-child(1) .icon { color: #ff7bac; }
+        .timer-unit:nth-child(2) .icon { color: #69a7ff; }
+        .timer-unit:nth-child(3) .icon { color: #f7a04b; }
+        .timer-unit:nth-child(4) .icon { color: #ffd700; }
 
-        /* --- RESTORED: Gift Message Box & Button --- */
+        /* --- Button Styles --- */
         .gift-message {
             background: #fff7fa;
             border-radius: 12px;
@@ -125,82 +168,164 @@
         }
     
         @keyframes glow {
-            from {
-                box-shadow: 0 0 8px rgba(247, 90, 152, 0.6);
-            }
-            to {
-                box-shadow: 0 0 16px rgba(247, 90, 152, 1);
-            }
+            from { box-shadow: 0 0 8px rgba(247, 90, 152, 0.6); }
+            to { box-shadow: 0 0 16px rgba(247, 90, 152, 1); }
         }
-
     </style>
 </head>
 <body>
 
+    <div id="birthday-overlay">
+        <h1>Happy Birthday! 🎂</h1>
+    </div>
+
     <div class="countdown-card">
-        <h1>Your Special Day is Almost Here💗</h1>
+        <h1 id="main-title">Your Special Day is Almost Here💗</h1>
         <div class="timer-container">
-            <div class="timer-unit">
-                <span id="days">0</span>
-                <p>Days</p>
-                <div class="icon">♡</div>
-            </div>
-            <div class="timer-unit">
-                <span id="hours">0</span>
-                <p>Hours</p>
-                <div class="icon">🎁</div>
-            </div>
-            <div class="timer-unit">
-                <span id="minutes">0</span>
-                <p>Minutes</p>
-                <div class="icon">🎂</div>
-            </div>
-            <div class="timer-unit">
-                <span id="seconds">0</span>
-                <p>Seconds</p>
-                <div class="icon">⭐</div>
-            </div>
+            <div class="timer-unit"><span id="days">0</span><p>Days</p><div class="icon">♡</div></div>
+            <div class="timer-unit"><span id="hours">0</span><p>Hours</p><div class="icon">🎁</div></div>
+            <div class="timer-unit"><span id="minutes">0</span><p>Minutes</p><div class="icon">🎂</div></div>
+            <div class="timer-unit"><span id="seconds">0</span><p>Seconds</p><div class="icon">⭐</div></div>
         </div>
 
         <div class="gift-message">
-            <a class="email-link" href="https://www.instagram.com/direct/t/105634340831245/">aur aaj kya kya kar school me batao sa</a>
+            <a class="email-link" id="dynamicLink" href="#">Loading...</a>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- CONFIGURATION ---
+            
+            const normalLink = "https://www.instagram.com/direct/t/105634340831245/";
+            const normalText = "aur aaj kya kya kar school me batao sa";
+
+            const birthdayLink = "http://palluuuu.vercel.app/";
+            const birthdayText = "Click here to see your surprise! 🎁"; 
+
+            // ---------------------
+
+            const linkElement = document.getElementById('dynamicLink');
+            const overlay = document.getElementById('birthday-overlay');
+            const mainTitle = document.getElementById('main-title');
+            
+            // Flag to check if it's birthday mode
+            let isBirthdayMode = false;
+
+            // --- CLICK HANDLER FOR DISSOLVE EFFECT ---
+            linkElement.addEventListener('click', function(e) {
+                // If it is the birthday (after Dec 1st)
+                if (isBirthdayMode) {
+                    // Prevent the link from opening immediately
+                    e.preventDefault();
+
+                    // Add the dissolve animation class to the BODY
+                    document.body.classList.add('page-dissolve');
+
+                    // Wait 2 seconds (2000ms) then go to the link
+                    setTimeout(function() {
+                        window.location.href = birthdayLink;
+                    }, 2000);
+                }
+                // If it's NOT birthday yet, it just opens Instagram normally
+            });
+
+
+            // --- Confetti Logic ---
+            let confettiInterval; 
+            function runConfetti() {
+                var duration = 5000; 
+                var animationEnd = Date.now() + duration;
+                var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 }; 
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                confettiInterval = setInterval(function() {
+                    var timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(confettiInterval);
+                    }
+
+                    var particleCount = 50 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, { 
+                        particleCount, 
+                        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+                    }));
+                    confetti(Object.assign({}, defaults, { 
+                        particleCount, 
+                        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+                    }));
+                }, 250);
+            }
+
+            // --- The 5-Second Splash Sequence ---
+            function triggerBirthdaySequence() {
+                // Set the global flag to true
+                isBirthdayMode = true;
+
+                // 1. Show the Overlay
+                overlay.style.display = 'flex';
+                
+                // 2. Start Confetti
+                runConfetti();
+
+                // 3. Update the Card Information
+                mainTitle.innerHTML = "Your Special Day is Here! 🎉";
+                document.getElementById('days').innerHTML = 0;
+                document.getElementById('hours').innerHTML = 0;
+                document.getElementById('minutes').innerHTML = 0;
+                document.getElementById('seconds').innerHTML = 0;
+                
+                // Note: We set the href here for fallback, but the Click Handler above intercepts it
+                linkElement.href = birthdayLink;
+                linkElement.innerText = birthdayText;
+
+                // 4. Wait 5 seconds, then hide overlay
+                setTimeout(() => {
+                    overlay.style.display = 'none'; 
+                }, 5000);
+            }
+
             // --- Countdown Function ---
             function startCountdown() {
                 const countDownDate = new Date("Dec 1, 2025 00:00:00").getTime();
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-                const titleEl = document.querySelector('.countdown-card h1');
+                
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
 
-                const countdownInterval = setInterval(function() {
-                    const now = new Date().getTime();
-                    const distance = countDownDate - now;
+                if (distance < 0) {
+                    // IT IS BIRTHDAY (OR AFTER)
+                    triggerBirthdaySequence();
+                } else {
+                    // IT IS NOT BIRTHDAY YET
+                    isBirthdayMode = false;
+                    linkElement.href = normalLink;
+                    linkElement.innerText = normalText;
 
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    const countdownInterval = setInterval(function() {
+                        const now = new Date().getTime();
+                        const distance = countDownDate - now;
 
-                    daysEl.innerHTML = days;
-                    hoursEl.innerHTML = hours;
-                    minutesEl.innerHTML = minutes;
-                    secondsEl.innerHTML = seconds;
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    if (distance < 0) {
-                        clearInterval(countdownInterval);
-                        titleEl.innerHTML = "Your Special Day is Here! 🎉";
-                        daysEl.innerHTML = 0;
-                        hoursEl.innerHTML = 0;
-                        minutesEl.innerHTML = 0;
-                        secondsEl.innerHTML = 0;
-                    }
-                }, 1000);
+                        if (distance < 0) {
+                            clearInterval(countdownInterval);
+                            triggerBirthdaySequence();
+                        } else {
+                            document.getElementById('days').innerHTML = days;
+                            document.getElementById('hours').innerHTML = hours;
+                            document.getElementById('minutes').innerHTML = minutes;
+                            document.getElementById('seconds').innerHTML = seconds;
+                        }
+                    }, 1000);
+                }
             }
 
             startCountdown();
